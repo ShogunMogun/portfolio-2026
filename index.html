@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Bodoni+Moda:ital,wght@0,700;1,700&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@700&family=Playfair+Display:ital,wght@0,700;1,700;1,900&family=Archivo+Black&family=Anton&family=Abril+Fatface&family=Libre+Caslon+Display&family=Syne:wght@700;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://player.vimeo.com/api/player.js"></script>
+<style>
+  @font-face{font-family:'Nyght Serif';src:url('fonts/NyghtSerif-Light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Nyght Serif';src:url('fonts/NyghtSerif-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Nyght Serif';src:url('fonts/NyghtSerif-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Thunder';src:url('fonts/Thunder-Black.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Thunder';src:url('fonts/Thunder-SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Thunder';src:url('fonts/Thunder-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'Archivo',sans-serif;background:#F5F0E4;color:#1c201d;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:#1c201d;color:#F5F0E4;}
+  @keyframes marqueeLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes marqueeRight{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+  @keyframes spinSlow{to{transform:rotate(360deg)}}
+  @keyframes pulseDot{0%,100%{transform:scale(1)}50%{transform:scale(.5)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes heroFadeA{0%{opacity:0;transform:translateY(26px)}100%{opacity:1;transform:translateY(0)}}
+  @keyframes heroFadeB{0%{opacity:0;transform:translateY(26px)}100%{opacity:1;transform:translateY(0)}}
+  @keyframes scrollCue{0%{transform:translateY(0);opacity:1}80%{opacity:1}100%{transform:translateY(13px);opacity:0}}
+  [data-sticky-card]{opacity:0;transform:rotate(0deg);background:#c75b39;transition:opacity .5s ease, transform .6s cubic-bezier(.22,1,.36,1);}
+  [data-work="row"] h3{color:#c7ccc6;transform:translateX(0);transition:color .34s ease, transform .58s cubic-bezier(.22,1,.36,1);}
+  [data-work="row"] [data-arrow]{opacity:0;transform:translateX(-26px);transition:opacity .4s ease, transform .58s cubic-bezier(.22,1,.36,1);}
+  [data-work="row"] [data-desc]{opacity:0;transform:translateX(0);margin-top:14px;transition:opacity .42s ease, transform .58s cubic-bezier(.22,1,.36,1);}
+  .amask{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em;}
+  .aword{display:inline-block;transform:translateY(115%);}
+  .amotif{opacity:0;transform:translateY(24px);}
+  @media (max-width:760px){
+    [data-work-section]{padding:70px 22px 80px !important;}
+    [data-work-grid]{grid-template-columns:1fr !important;gap:0 !important;}
+    [data-names-col]{grid-column:1 !important;grid-row:1 !important;}
+    [data-card-col]{grid-column:1 !important;grid-row:1 !important;justify-self:end !important;align-self:stretch !important;width:60% !important;}
+    [data-sticky-card]{border-radius:11px !important;aspect-ratio:16/9 !important;}
+    [data-work="row"]{min-height:16vh !important;}
+    [data-work="row"] h3{font-size:16vw !important;}
+    [data-work="row"] [data-arrow] svg{width:44px !important;}
+  }
+  @keyframes ringSpin{to{transform:rotate(360deg)}}
+  @keyframes orbit{from{transform:rotate(0deg) translateX(var(--orb,26px)) rotate(0deg)}to{transform:rotate(360deg) translateX(var(--orb,26px)) rotate(-360deg)}}
+  @keyframes blobMorph{0%,100%{border-radius:42% 58% 63% 37% / 41% 44% 56% 59%}50%{border-radius:62% 38% 35% 65% / 59% 36% 64% 41%}}
+  @keyframes barDance{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative;width:100%;">
+
+  <div style="{{ introStyle }}" aria-hidden="true">
+    <div style="display:inline-block;text-align:center;">
+      <div data-introline1 style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(15px,2.9vw,38px);font-weight:700;letter-spacing:.01em;word-spacing:.14em;text-align:center;line-height:1;margin-bottom:.5em;color:#1c201d;">Hi! this is my</div>
+      <div data-introword style="font-family:'Thunder',sans-serif;font-size:clamp(72px,16vw,210px);font-weight:800;letter-spacing:.01em;text-transform:uppercase;color:#1c201d;line-height:.9;">Portfolio</div>
+    </div>
+  </div>
+
+  <a href="#top" data-wordmark style="position:fixed;top:22px;left:clamp(18px,4vw,44px);z-index:901;font-family:'Thunder',sans-serif;font-size:34px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1;color:#ffffff;mix-blend-mode:difference;">PORTFOLIO</a>
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:flex-end;padding:22px clamp(18px,4vw,44px);">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="border:none;cursor:pointer;background:#1c201d;border-radius:11px;width:60px;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;">
+      <span style="{{ barTop }}"></span>
+      <span style="{{ barMid }}"></span>
+    </button>
+  </nav>
+
+  <div style="{{ menuStyle }}">
+    <div style="display:flex;flex-direction:column;gap:clamp(6px,1.4vh,16px);">
+      <a href="#work" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Work</a>
+      <a href="#about" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">About</a>
+      <a href="mailto:asylum.tal@gmail.com" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Contact</a>
+    </div>
+    <div style="margin-top:clamp(30px,6vh,64px);font-size:13px;letter-spacing:.18em;color:#7c837c;">ASYLUM.TAL@GMAIL.COM</div>
+  </div>
+
+  <header id="top" style="position:sticky;top:0;height:100vh;min-height:640px;width:100%;display:flex;flex-direction:column;overflow:hidden;z-index:1;">
+    <div style="position:absolute;inset:0;overflow:hidden;background:#1c201d;">
+      <iframe src="https://player.vimeo.com/video/1206224462?background=1&amp;autopause=0&amp;muted=1&amp;loop=1&amp;quality=1080p" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-width:177.78vh;min-height:100vh;transform:translate(-50%,-50%);border:0;pointer-events:none;" title="Showreel"></iframe>
+    </div>
+    <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:5;mix-blend-mode:difference;">
+      <span style="font-size:10px;letter-spacing:.28em;color:#fff;">SCROLL</span>
+      <div style="width:1px;height:30px;background:rgba(255,255,255,.45);position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;width:1px;height:12px;background:#fff;animation:scrollCue 1.7s ease-in-out infinite;"></div></div>
+    </div>
+  </header>
+
+  <div style="position:relative;z-index:2;background:#F5F0E4;">
+
+  <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:clamp(36px,6vh,96px) clamp(18px,5vw,90px) clamp(120px,22vh,260px);">
+    <div style="font-family:'Archivo',sans-serif;font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#9aa39c;margin-bottom:clamp(18px,3vh,34px);">( About me )</div>
+    <div data-about style="font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(30px,4.5vw,78px);line-height:1.04;letter-spacing:-.02em;color:#1c201d;max-width:19ch;">
+      <span class="amask"><span class="aword">Senior</span></span> <span class="amask"><span class="aword">Creative</span></span> <span class="amask"><span class="aword">Designer</span></span> <span class="amask"><span class="aword">specializing</span></span> <span class="amask"><span class="aword">in</span></span> <span class="amask"><span class="aword">branding,</span></span> <span class="amask"><span class="aword">motion,</span></span> <span class="amask"><span class="aword">web,</span></span> <span class="amask"><span class="aword">and</span></span> <span class="amask"><span class="aword">AI</span></span> <span class="amask"><span class="aword">creative</span></span> <span class="amask"><span class="aword">systems.</span></span>
+      <span class="amotif" style="display:flex;align-items:center;justify-content:center;width:clamp(58px,5.4vw,100px);height:clamp(58px,5.4vw,100px);margin:clamp(20px,3.2vh,46px) 0;position:relative;">
+        <span style="position:absolute;inset:0;border:2px solid #1c201d;border-radius:50%;animation:ringSpin 9s linear infinite;border-top-color:transparent;border-right-color:transparent;"></span>
+        <span style="position:absolute;top:50%;left:50%;width:11px;height:11px;margin:-5.5px;border-radius:50%;background:#E2502A;--orb:calc(clamp(58px,5.4vw,100px)/2 - 6px);animation:orbit 4.5s linear infinite;"></span>
+      </span>
+      <span class="amask"><span class="aword">I</span></span> <span class="amask"><span class="aword">transform</span></span> <span class="amask"><span class="aword">complex</span></span> <span class="amask"><span class="aword">ideas</span></span> <span class="amask"><span class="aword">into</span></span> <span class="amask"><span class="aword">compelling</span></span> <span class="amask"><span class="aword">visual</span></span> <span class="amask"><span class="aword">communication.</span></span>
+      <span class="amotif" style="display:flex;align-items:center;justify-content:center;width:clamp(46px,4.2vw,78px);height:clamp(46px,4.2vw,78px);margin:clamp(20px,3.2vh,46px) 0;position:relative;">
+        <span style="position:absolute;inset:1%;border:2px solid #1c201d;transform:rotate(45deg);animation:spinSlow 16s linear infinite;"></span>
+        <span style="position:absolute;inset:17%;border:2px solid #1c201d;border-radius:3px;transform:rotate(45deg);animation:spinSlow 11s linear infinite reverse;"></span>
+        <span style="position:absolute;inset:33%;border:2px solid #E2502A;transform:rotate(45deg);animation:spinSlow 7s linear infinite;"></span>
+        <span style="position:absolute;top:50%;left:50%;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:#1c201d;animation:pulseDot 2s ease-in-out infinite;"></span>
+        <span style="position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:#E2502A;--orb:calc(clamp(46px,4.2vw,78px)/2 - 3px);animation:orbit 4.8s linear infinite;"></span>
+      </span>
+    </div>
+  </section>
+
+  <section id="work" data-work-section onMouseLeave="{{ clearHover }}" style="position:relative;padding:clamp(70px,12vh,160px) clamp(20px,4vw,72px) clamp(60px,10vh,130px);max-width:1920px;margin:0 auto;">
+    <div data-work-grid style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(20px,3vw,56px);align-items:stretch;">
+      <div data-names-col style="position:relative;min-width:0;">
+        <sc-for list="{{ works }}" as="item" hint-placeholder-count="10">
+          <div data-work="row" data-tag="{{ item.tag }}" data-video="{{ item.video }}" data-file="{{ item.file }}" data-gifs="{{ item.gifs }}" onMouseEnter="{{ item.onEnter }}" style="position:relative;min-height:clamp(178px,30vh,360px);display:flex;flex-direction:column;justify-content:center;">
+            <a href="{{ item.href }}" style="display:block;cursor:pointer;position:relative;">
+              <div style="display:flex;align-items:center;gap:clamp(10px,1.6vw,26px);">
+                <span data-arrow style="flex-shrink:0;display:flex;align-items:center;"><svg viewBox="0 0 78 18" style="width:clamp(46px,4.6vw,92px);height:auto;display:block;overflow:visible;"><line x1="0" y1="9" x2="73" y2="9" stroke="#1c201d" stroke-width="1.3" stroke-linecap="round"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="#1c201d" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                <h3 style="margin:0;font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(42px,7vw,130px);line-height:.9;letter-spacing:-.015em;white-space:nowrap;"><sc-if value="{{ item.twoLine }}" hint-placeholder-val=""><span style="display:block;line-height:.82;">{{ item.titleA }}</span><span style="display:block;line-height:.82;">{{ item.titleB }}</span></sc-if><sc-if value="{{ item.oneLine }}" hint-placeholder-val="{{ true }}">{{ item.title }}</sc-if></h3>
+              </div>
+              <div data-desc style="position:absolute;top:100%;left:0;font-size:clamp(11px,1.05vw,14px);font-weight:600;letter-spacing:.2em;color:#1c201d;padding-left:calc(clamp(46px,4.6vw,92px) + clamp(10px,1.6vw,26px));">{{ item.desc }}</div>
+            </a>
+          </div>
+        </sc-for>
+      </div>
+      <div data-card-col style="position:relative;height:100%;">
+        <div data-sticky-wrap style="position:sticky;top:38vh;height:0;">
+         <div style="transform:translateY(-28%);">
+          <div data-sticky-card style="position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;">
+            <iframe data-card-video src="about:blank" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" style="position:absolute;top:50%;left:50%;width:100%;height:133.4%;transform:translate(-50%,-50%) scale(1.03);border:0;opacity:0;transition:opacity .4s ease;pointer-events:none;" title="Project video"></iframe>
+            <iframe data-primis-video src="https://player.vimeo.com/video/1206862673?background=1&amp;autopause=0&amp;muted=1&amp;loop=1" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" style="position:absolute;top:50%;left:50%;width:100%;height:133.4%;transform:translate(-50%,-50%) scale(1.03);border:0;opacity:0;transition:opacity .4s ease;pointer-events:none;" title="Primis case studies"></iframe>
+            <video data-card-video-file muted="{{ true }}" loop="{{ true }}" playsinline="{{ true }}" autoplay="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;pointer-events:none;"></video>
+            <div data-card-gif-grid style="position:absolute;inset:0;background:#ffffff;opacity:0;transition:opacity .4s ease;pointer-events:none;">
+              <img data-card-gif alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7%;box-sizing:border-box;opacity:1;transition:opacity .22s ease;">
+            </div>
+            <div data-card-overlay style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:rgba(255,255,255,.95);transition:opacity .3s ease;">
+              <div style="width:64px;height:64px;border:1.5px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">▶</div>
+              <span data-card-label style="font-size:12px;font-weight:600;letter-spacing:.24em;">{{ cardLabel }}</span>
+            </div>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(70px,12vh,150px) 0 clamp(50px,8vh,100px);overflow:hidden;">
+    <div style="text-align:center;font-size:13px;font-weight:600;letter-spacing:.22em;color:#9aa39c;margin-bottom:clamp(34px,6vh,70px);">( SKILLS )</div>
+    <div style="{{ clientsRowStyle }}">
+      <sc-for list="{{ clientsLoop }}" as="c" hint-placeholder-count="12">
+        <span style="display:flex;align-items:center;gap:clamp(26px,4vw,64px);padding-right:clamp(26px,4vw,64px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(34px,6vw,84px);letter-spacing:-.01em;white-space:nowrap;color:#1c201d;">{{ c }}<span style="color:#bfc4be;font-weight:300;">•</span></span>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer id="about" style="position:relative;padding:clamp(50px,8vh,90px) clamp(18px,5vw,90px) 0;overflow:hidden;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:30px;max-width:1480px;margin:0 auto;">
+      <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">
+        <div style="width:26px;height:26px;border:2px solid #1c201d;transform:rotate(45deg);position:relative;"><div style="position:absolute;inset:5px;border:2px solid #1c201d;border-radius:50%;"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:11px;font-size:13px;font-weight:600;letter-spacing:.14em;">
+        <a href="#about" style="color:#1c201d;">INSTAGRAM</a>
+        <a href="#about" style="color:#1c201d;">LINKEDIN</a>
+        <a href="#about" style="color:#1c201d;">VIMEO</a>
+      </div>
+    </div>
+    <div style="font-family:'Thunder',sans-serif;font-size:clamp(120px,34vw,560px);font-weight:800;letter-spacing:.005em;text-transform:uppercase;line-height:.82;color:#1c201d;margin-top:clamp(30px,6vh,70px);margin-bottom:-.08em;text-align:center;">PORTFOLIO</div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;padding:22px 0;max-width:1480px;margin:0 auto;font-size:12px;font-weight:600;letter-spacing:.1em;color:#7c837c;">
+      <span>PORTFOLIO © 2026</span>
+      <a href="mailto:asylum.tal@gmail.com" style="color:#7c837c;">ASYLUM.TAL@GMAIL.COM</a>
+      <a href="#top" style="color:#7c837c;">BACK TO TOP ↑</a>
+    </div>
+  </footer>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;},&quot;intro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;arcAmount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:60,&quot;min&quot;:0,&quot;max&quot;:100,&quot;step&quot;:5,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero gallery&quot;},&quot;marqueeSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:38,&quot;min&quot;:16,&quot;max&quot;:70,&quot;step&quot;:2,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Hero gallery&quot;}}">
+class Component extends DCLogic {
+  state = { introDone: false, introGone: false, menuOpen: false, active: -1 };
+  workEls = [];
+  _hoverIdx = null;
+  _applied = -1;
+  _lastBest = -2;
+  _lastVis = -2;
+
+  static FLAT = ['#3f6c9e', '#c75b39', '#4f7a5f', '#6a5a86', '#a8493f', '#357f86', '#8a6d3b', '#41608a', '#7d5266', '#bf6a3a'];
+  static TILTS = [-6, 6, -5, 7, -6, 5, -7, 6, -5, 7];
+
+  static GRADS = [
+    'linear-gradient(135deg,#3a6ea5,#7aa6d6)',
+    'linear-gradient(135deg,#b5612f,#e0a05a)',
+    'linear-gradient(135deg,#46695a,#86ad90)',
+    'linear-gradient(135deg,#5f5384,#9a8cc0)',
+    'linear-gradient(135deg,#a23b3b,#d68070)',
+    'linear-gradient(135deg,#2f6f74,#73b2b4)',
+    'linear-gradient(135deg,#8a6d3b,#c6a566)',
+    'linear-gradient(135deg,#3d5a80,#84a0c2)',
+    'linear-gradient(135deg,#7a4b5e,#bb8a9b)',
+    'linear-gradient(135deg,#b5512f,#e89a5e)',
+  ];
+
+  componentDidMount() {
+    this._timers = [];
+    // preload card gifs so they're decoded before hover (no blank white flash)
+    try {
+      ['assets/sg-vines.gif','assets/primis-banner.gif','assets/primis-eyes.gif','assets/primis-eye.gif','assets/primis-projector.gif','assets/primis-boards.gif']
+        .forEach(src => { const im = new Image(); im.src = src; });
+    } catch (e) {}
+    const intro = this.props.intro ?? true;
+    if (intro) {
+      // rapid font flicker on the intro wordmark
+      const wFonts = [
+        { f: "'Archivo Black',sans-serif", s: 'normal' },
+        { f: "'DM Serif Display',serif", s: 'italic' },
+        { f: "'Space Mono',monospace", s: 'normal' },
+        { f: "'Bodoni Moda',serif", s: 'italic' },
+        { f: "'Playfair Display',serif", s: 'normal' },
+        { f: "'Nyght Serif',serif", s: 'italic' },
+        { f: "'Anton',sans-serif", s: 'normal' },
+        { f: "'Abril Fatface',serif", s: 'normal' },
+        { f: "'Syne',sans-serif", s: 'normal' },
+        { f: "'Libre Caslon Display',serif", s: 'italic' },
+        { f: "'Oswald',sans-serif", s: 'normal' },
+        { f: "'Thunder',sans-serif", s: 'normal' },
+      ];
+      let fi = 0;
+      const lFonts = [
+        { f: "'Space Mono',monospace", s: 'italic' },
+        { f: "'Archivo Black',sans-serif", s: 'italic' },
+        { f: "'Nyght Serif',serif", s: 'italic' },
+        { f: "'DM Serif Display',serif", s: 'normal' },
+        { f: "'Bodoni Moda',serif", s: 'italic' },
+        { f: "'Archivo',sans-serif", s: 'italic' },
+        { f: "'Abril Fatface',serif", s: 'normal' },
+        { f: "'Syne',sans-serif", s: 'normal' },
+        { f: "'Oswald',sans-serif", s: 'normal' },
+        { f: "'Libre Caslon Display',serif", s: 'italic' },
+        { f: "'Playfair Display',serif", s: 'italic' },
+      ];
+      let flick = null;
+      let flickStopped = false;
+      const flickStep = () => {
+        if (flickStopped) return;
+        const w = document.querySelector('[data-introword]');
+        if (w) { const g = wFonts[fi % wFonts.length]; w.style.fontFamily = g.f; w.style.fontStyle = g.s; }
+        const l1 = document.querySelector('[data-introline1]');
+        if (l1) { const g = lFonts[fi % lFonts.length]; l1.style.fontFamily = g.f; l1.style.fontStyle = g.s; }
+        fi++;
+        // ease-out cadence: brisk at first, gradually slowing so it reads as a settle — never a speed-up
+        const t = Math.min(fi / 18, 1);
+        const delay = 150 + t * t * 520;
+        flick = setTimeout(flickStep, delay);
+        this._timers.push(flick);
+      };
+      flickStep();
+
+      // Dismiss the intro only once the hero video is actually playing (or a safety timeout).
+      let dismissed = false;
+      const dismiss = () => {
+        if (dismissed) return;
+        dismissed = true;
+        flickStopped = true;
+        clearTimeout(flick);
+        const w = document.querySelector('[data-introword]');
+        if (w) { w.style.fontFamily = "'Thunder',sans-serif"; w.style.fontStyle = 'normal'; }
+        const l1 = document.querySelector('[data-introline1]');
+        if (l1) { l1.style.fontFamily = "'Playfair Display',serif"; l1.style.fontStyle = 'italic'; }
+        this._timers.push(setTimeout(() => this.setState({ introDone: true }), 420));
+        this._timers.push(setTimeout(() => this.setState({ introGone: true }), 1500));
+      };
+      const waitForVideo = (tries) => {
+        const ifr = document.querySelector('iframe[title="Showreel"]');
+        if (window.Vimeo && ifr) {
+          try {
+            const player = new window.Vimeo.Player(ifr);
+            player.on('playing', dismiss);
+            player.on('bufferend', dismiss);
+          } catch (e) { this._timers.push(setTimeout(dismiss, 600)); }
+        } else if (tries < 60) {
+          this._timers.push(setTimeout(() => waitForVideo(tries + 1), 120));
+        } else {
+          dismiss();
+        }
+      };
+      waitForVideo(0);
+      // safety net: never let the intro trap the page if the video stalls
+      this._timers.push(setTimeout(dismiss, 8000));
+    } else {
+      this.setState({ introDone: true, introGone: true });
+    }
+    const phrases = ['Stay connected', 'Tell the story', 'Make it move', 'Bring brands to life'];
+    let k = 0, pIdx = 0;
+    this._timers.push(setInterval(() => {
+      k++;
+      if (k % 24 === 0) { pIdx = (pIdx + 1) % phrases.length; const h1 = document.querySelector('[data-hero-h1]'); if (h1) h1.textContent = phrases[pIdx]; }
+      const sy = (document.scrollingElement || document.documentElement).scrollTop || window.pageYOffset || 0;
+      if (this._lastSY === undefined) this._lastSY = sy;
+      if (Math.abs(sy - this._lastSY) > 2) { this._hoverIdx = null; this._lastSY = sy; }
+      const rows = document.querySelectorAll('[data-work="row"]');
+      if (rows.length) {
+        let best = this._hoverIdx;
+        if (best == null) {
+          const vh = window.innerHeight || 800; const cy = vh / 2; let bd = Infinity; best = -1;
+          for (let i = 0; i < rows.length; i++) { const r = rows[i].getBoundingClientRect(); const c = r.top + r.height / 2; const d = Math.abs(c - cy); if (d < bd) { bd = d; best = i; } }
+          if (bd > (window.innerHeight || 800) * 0.3) best = -1;
+        }
+        if (best !== this.state.active) this.setState({ active: best });
+        this._applyVisuals(best);
+      }
+      this._maybeRevealAbout();
+    }, 110));
+
+    // Preload the two known project media sources up front so hover has no load flash.
+    const preloadCardMedia = () => {
+      const card = document.querySelector('[data-sticky-card]');
+      if (!card) return;
+      const vidEl = card.querySelector('[data-card-video]');
+      const fileEl = card.querySelector('[data-card-video-file]');
+      if (fileEl && !fileEl.getAttribute('data-loaded')) {
+        fileEl.preload = 'auto';
+        fileEl.src = 'assets/vega.mp4';
+        fileEl.setAttribute('data-loaded', 'assets/vega.mp4');
+        fileEl.load();
+      }
+      if (vidEl && !vidEl.getAttribute('data-loaded')) {
+        vidEl.src = 'https://player.vimeo.com/video/1206440233?background=1&autopause=0&muted=1&loop=1';
+        vidEl.setAttribute('data-loaded', '1206440233');
+      }
+    };
+    preloadCardMedia();
+  }
+
+  _maybeRevealAbout() {
+    if (this._aboutShown) return;
+    const ab = document.querySelector('[data-about]');
+    if (!ab) return;
+    const vh = window.innerHeight || 800;
+    const r = ab.getBoundingClientRect();
+    if (!(r.top < vh * 0.82 && r.bottom > vh * 0.05)) return;
+    this._aboutShown = true;
+    const words = Array.prototype.slice.call(ab.querySelectorAll('.aword'));
+    const motifs = Array.prototype.slice.call(ab.querySelectorAll('.amotif'));
+    const stagger = 45, dur = 560;   // faster cascade + snappier per-word glide
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const start = (window.performance && performance.now) ? performance.now() : Date.now();
+    const tick = (now) => {
+      const el = now - start;
+      let done = true;
+      for (let i = 0; i < words.length; i++) {
+        const lt = el - i * stagger;
+        let p = lt <= 0 ? 0 : (lt >= dur ? 1 : lt / dur);
+        if (p < 1) done = false;
+        words[i].style.transform = 'translateY(' + (115 * (1 - ease(p))) + '%)';
+      }
+      for (let i = 0; i < motifs.length; i++) {
+        const lt = el - (words.length * stagger * 0.5 + i * 200);
+        let p = lt <= 0 ? 0 : (lt >= dur ? 1 : lt / dur);
+        if (p < 1) done = false;
+        const e = ease(p);
+        motifs[i].style.opacity = String(e);
+        motifs[i].style.transform = 'translateY(' + (24 * (1 - e)) + 'px)';
+      }
+      if (!done) this._aboutRaf = requestAnimationFrame(tick);
+    };
+    this._aboutRaf = requestAnimationFrame(tick);
+  }
+
+  _applyVisuals(active) {
+    const INK = '#1c201d';
+    const rows = document.querySelectorAll('[data-work="row"]');
+    rows.forEach((row, i) => {
+      const on = i === active;
+      const h3 = row.querySelector('h3');
+      const a = row.querySelector('[data-arrow]');
+      const d = row.querySelector('[data-desc]');
+      const z = on ? '5' : '0';
+      if (row.style.zIndex !== z) row.style.zIndex = z;
+      if (h3) { const c = on ? INK : ''; const tf = on ? 'translateX(clamp(48px,7.6vw,176px))' : ''; if (h3.style.color !== c) h3.style.color = c; if (h3.style.transform !== tf) h3.style.transform = tf; }
+      if (a) { const o = on ? '1' : ''; const tf = on ? 'translateX(clamp(48px,7.6vw,176px))' : ''; if (a.style.opacity !== o) a.style.opacity = o; if (a.style.transform !== tf) a.style.transform = tf; }
+      if (d) { const o = on ? '1' : ''; const tf = on ? 'translateX(clamp(48px,7.6vw,176px))' : ''; if (d.style.opacity !== o) d.style.opacity = o; if (d.style.transform !== tf) d.style.transform = tf; }
+    });
+    const card = document.querySelector('[data-sticky-card]');
+    if (!card) return;
+    const vidEl = card.querySelector('[data-card-video]');
+    const primisEl = card.querySelector('[data-primis-video]');
+    const PRIMIS_ID = '1206862673';
+    const fileEl = card.querySelector('[data-card-video-file]');
+    const gifEl = card.querySelector('[data-card-gif-grid]');
+    const overlay = card.querySelector('[data-card-overlay]');
+    const showPrimis = (on) => { if (primisEl) primisEl.style.opacity = on ? '1' : '0'; };
+    const stopGifs = () => { if (this._gifTimer) { clearTimeout(this._gifTimer); this._gifTimer = null; } this._gifActive = -1; };
+    if (active >= 0) {
+      const tilt = Component.TILTS[((active % 10) + 10) % 10];
+      const vid = rows[active] ? (rows[active].getAttribute('data-video') || '') : '';
+      const file = rows[active] ? (rows[active].getAttribute('data-file') || '') : '';
+      const gifs = rows[active] ? (rows[active].getAttribute('data-gifs') || '') : '';
+      if (vid === PRIMIS_ID) {
+        stopGifs();
+        showPrimis(true);
+        if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
+        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
+        if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
+        if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
+        if (this._cardBg !== '#fff') { card.style.background = '#fff'; this._cardBg = '#fff'; }
+      } else if (gifs) {
+        showPrimis(false);
+        const list = gifs.split(',').map(s => s.trim()).filter(Boolean);
+        if (this._gifActive !== active) {
+          if (this._gifTimer) { clearTimeout(this._gifTimer); this._gifTimer = null; }
+          this._gifActive = active;
+          const img = gifEl ? gifEl.querySelector('[data-card-gif]') : null;
+          const fulls = { 'assets/primis-banner.gif': true, 'assets/sg-vines.gif': true };
+          const durations = { 'assets/primis-eyes.gif': 7520, 'assets/primis-eye.gif': 5000, 'assets/primis-banner.gif': 5920, 'assets/primis-projector.gif': 2600, 'assets/primis-boards.gif': 4640, 'assets/sg-vines.gif': 60000 };
+          let idx = 0;
+          const advance = () => {
+            const src = list[idx % list.length];
+            if (!img || !src) return;
+            // crossfade to hide the aspect-ratio size change
+            img.style.opacity = '0';
+            const swap = () => {
+              img.src = src;
+              if (fulls[src]) { img.style.objectFit = 'cover'; img.style.padding = '0'; }
+              else { img.style.objectFit = 'contain'; img.style.padding = '3%'; }
+              img.style.opacity = '1';
+              const dur = durations[src] || 3000;
+              idx += 1;
+              this._gifTimer = setTimeout(advance, dur);
+            };
+            this._gifTimer = setTimeout(swap, 220);
+          };
+          advance();
+        }
+        if (gifEl && gifEl.style.opacity !== '1') gifEl.style.opacity = '1';
+        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
+        if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
+        if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
+        if (this._cardBg !== '#F5F0E4') { card.style.background = '#F5F0E4'; this._cardBg = '#F5F0E4'; }
+      } else if (file) {
+        stopGifs(); showPrimis(false);
+        if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
+        if (fileEl) {
+          if (fileEl.getAttribute('data-loaded') !== file) { fileEl.src = file; fileEl.setAttribute('data-loaded', file); }
+          if (fileEl.style.opacity !== '1') { fileEl.style.opacity = '1'; fileEl.play && fileEl.play().catch(() => {}); }
+        }
+        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
+        if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
+        if (this._cardBg !== '#fff') { card.style.background = '#fff'; this._cardBg = '#fff'; }
+      } else if (vid) {
+        stopGifs(); showPrimis(false);
+        if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
+        if (vidEl) {
+          if (vidEl.getAttribute('data-loaded') !== vid) { vidEl.src = 'https://player.vimeo.com/video/' + vid + '?background=1&autopause=0&muted=1&loop=1'; vidEl.setAttribute('data-loaded', vid); }
+          if (vidEl.style.opacity !== '1') vidEl.style.opacity = '1';
+        }
+        if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
+        if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
+        if (this._cardBg !== '#fff') { card.style.background = '#fff'; this._cardBg = '#fff'; }
+      } else {
+        stopGifs(); showPrimis(false);
+        if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
+        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
+        if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
+        if (overlay && overlay.style.opacity !== '1') overlay.style.opacity = '1';
+        const bg = Component.FLAT[((active % Component.FLAT.length) + Component.FLAT.length) % Component.FLAT.length];
+        if (this._cardBg !== bg) { card.style.background = bg; this._cardBg = bg; }
+      }
+      if (card.style.opacity !== '1') card.style.opacity = '1';
+      const tf = 'rotate(' + tilt + 'deg)';
+      if (card.style.transform !== tf) card.style.transform = tf;
+    } else {
+      stopGifs(); showPrimis(false);
+      if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
+      if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
+      if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
+      if (overlay && overlay.style.opacity !== '1') overlay.style.opacity = '1';
+      if (card.style.opacity !== '') card.style.opacity = '';
+      if (card.style.transform !== '') card.style.transform = '';
+    }
+  }
+
+  _collect(tries) {
+    this._revealEls = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+    this._workEls = Array.prototype.slice.call(document.querySelectorAll('[data-work="row"]'));
+    if (this._workEls.length < 2 && tries < 90) { setTimeout(() => this._collect(tries + 1), 60); }
+  }
+
+  _tick() {
+    const vh = window.innerHeight || 800;
+    if (this._revealEls) {
+      for (const el of this._revealEls) {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh * 0.9 && r.bottom > 0) { el.style.opacity = '1'; el.style.transform = 'none'; }
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    (this._timers || []).forEach((t) => { clearTimeout(t); clearInterval(t); });
+    if (this._rafId) cancelAnimationFrame(this._rafId);
+    if (this._aboutRaf) cancelAnimationFrame(this._aboutRaf);
+  }
+
+  renderVals() {
+    const arcAmt = (this.props.arcAmount ?? 60) / 60;
+    const speed = this.props.marqueeSpeed ?? 28;
+    const grads = Component.GRADS;
+
+    const base = [
+      { n: '01', title: 'Goodvertising', desc: 'CASE STUDY • EDITORIAL WEB', tag: 'GOODVERTISING', video: '1206440233' },
+      { n: '02', title: 'Vega & Orion', desc: 'WEBSITE • PRODUCT MARKETING', tag: 'VEGA', video: '', file: 'assets/vega.mp4' },
+      { n: '03', title: 'Motion campaigns', titleA: 'Motion', titleB: 'campaigns', desc: 'CAMPAIGNS • REELS', tag: 'MOTION', video: '1207005717' },
+      { n: '04', title: 'Sellers.guide', desc: 'PRODUCT • DESIGN • MARKETING', tag: 'SELLERS', video: '', gifs: 'assets/sg-vines.gif' },
+      { n: '05', title: 'Primis case studies', titleA: 'Primis', titleB: 'case studies', desc: 'CASE STUDIES • MOTION', tag: 'PRIMIS', video: '1206862673' },
+    ];
+
+    const INK = '#1c201d', GHOST = '#c7ccc6';
+    const active = this.state.active == null ? -1 : this.state.active;
+    if (!this._wc || this._wc.active !== active) {
+    const works = base.map((w, i) => {
+      const on = i === active;
+      return Object.assign({}, w, {
+        twoLine: !!w.titleA,
+        oneLine: !w.titleA,
+        onEnter: () => { this._hoverIdx = i; this.setState({ active: i }); },
+        href: ({ 'goodvertising': 'Goodvertising.dc.html', 'vega-orion': 'Vega.dc.html', 'vega': 'Vega.dc.html', 'primis-case-studies': 'Primis Case Studies.dc.html', 'sellers-guide': 'Sellers Guide.dc.html', 'motion': 'Motion.dc.html', 'motion-campaigns': 'Motion.dc.html', 'print-events': 'Print & Events.dc.html' }[w.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')]) || ('Project Page.dc.html?project=' + w.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')),
+        rowStyle: {
+          position: 'relative',
+          minHeight: 'clamp(190px,32vh,380px)',
+          display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        },
+        h3Style: {
+          margin: 0, fontFamily: "'Nyght Serif',serif", fontWeight: 400,
+          fontSize: 'clamp(48px,8.4vw,158px)', lineHeight: .9, letterSpacing: '-.015em',
+          whiteSpace: 'nowrap',
+        },
+        arrowStyle: {
+          flexShrink: 0, display: 'flex', alignItems: 'center',
+        },
+        descStyle: {
+          fontSize: 'clamp(11px,1.05vw,14px)', fontWeight: 600, letterSpacing: '.2em',
+          color: '#7c837c',
+          paddingLeft: 'clamp(42px,4.6vw,84px)',
+        },
+      });
+    });
+    const activeIdx = active;
+    const cardOn = activeIdx >= 0;
+    const cardStyle = {
+      position: 'relative', width: '100%', aspectRatio: '16 / 9',
+      borderRadius: '16px', overflow: 'hidden',
+    };
+    const cardLabel = (cardOn ? (works[activeIdx].tag) : 'LUMEN') + ' · VIDEO';
+      this._wc = { active: active, works: works, cardStyle: cardStyle, cardLabel: cardLabel };
+    }
+    const wc = this._wc;
+
+    const tyPat = [72, 36, 13, 2, 2, 13, 36, 72];
+    const rotPat = [7, 4, 1.5, -0.5, 0.5, -1.5, -4, -7];
+    const gLabels = ['VEGA', 'LUMEN', 'ATLAS', 'CARDINAL', 'HALCYON', 'NORTHWIND', 'PACE', 'MERIDIAN'];
+    const galleryBase = gLabels.map((label, i) => ({
+      label,
+      style: {
+        position: 'relative', flexShrink: 0,
+        width: 'clamp(170px,17vw,290px)', aspectRatio: '3 / 4',
+        borderRadius: '10px', overflow: 'hidden', background: grads[i % grads.length],
+        boxShadow: '0 24px 50px -28px rgba(28,32,29,.55)',
+        transform: 'translateY(' + (tyPat[i % 8] * arcAmt) + 'px) rotate(' + rotPat[i % 8] + 'deg)',
+      },
+    }));
+    const galleryCards = galleryBase.concat(galleryBase.map((c) => Object.assign({}, c)));
+
+    const clients = ['Creative Direction', 'Brand Identity', 'Motion Design', 'AI Creative Systems', 'Performance Marketing', 'Video Production', 'Web Design', 'Design Systems', 'Webflow'];
+
+    return {
+      clearHover: () => { this._hoverIdx = null; },
+      rootRef: (el) => { this.rootEl = el; },
+      works: wc.works,
+      cardStyle: wc.cardStyle,
+      cardLabel: wc.cardLabel,
+      galleryCards,
+      galleryRowStyle: {
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+        gap: 'clamp(12px,1.5vw,26px)', width: 'max-content',
+        padding: '0 clamp(12px,1.5vw,26px)', height: '100%',
+        animation: 'marqueeLeft ' + speed + 's linear infinite',
+      },
+      clientsLoop: clients.concat(clients),
+      clientsRowStyle: { display: 'flex', width: 'max-content', animation: 'marqueeRight ' + (speed + 8) + 's linear infinite' },
+      heroPhrase: 'Stay connected',
+      heroHeadlineStyle: {
+        margin: 0, fontFamily: "'Archivo',sans-serif", fontWeight: 500,
+        fontSize: 'clamp(54px,11vw,170px)', lineHeight: .92, letterSpacing: '-.035em',
+        color: '#6b766e', opacity: 1,
+      },
+      toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      barTop: { display: 'block', width: '24px', height: '2px', background: '#F5F0E4', borderRadius: '2px', transition: 'transform .35s ease', transform: this.state.menuOpen ? 'translateY(3.5px) rotate(45deg)' : 'none' },
+      barMid: { display: 'block', width: '24px', height: '2px', background: '#F5F0E4', borderRadius: '2px', transition: 'transform .35s ease', transform: this.state.menuOpen ? 'translateY(-3.5px) rotate(-45deg)' : 'none' },
+      menuStyle: {
+        position: 'fixed', inset: 0, zIndex: 800, background: '#F5F0E4',
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        padding: '0 clamp(24px,8vw,120px)',
+        opacity: this.state.menuOpen ? 1 : 0,
+        pointerEvents: this.state.menuOpen ? 'auto' : 'none',
+        transform: this.state.menuOpen ? 'none' : 'translateY(-12px)',
+        transition: 'opacity .45s ease, transform .5s cubic-bezier(.22,1,.36,1)',
+      },
+      introStyle: {
+        position: 'fixed', inset: 0, zIndex: 1000, background: '#F5F0E4',
+        display: this.state.introGone ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center',
+        transform: this.state.introDone ? 'translateY(-100vh)' : 'none',
+        transition: 'transform 1s cubic-bezier(.76,0,.24,1)',
+        pointerEvents: this.state.introDone ? 'none' : 'auto',
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

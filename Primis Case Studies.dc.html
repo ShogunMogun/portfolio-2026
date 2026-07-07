@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#F5F0E4">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#F5F0E4"/>
+    <text x="600" y="430" font-family="Georgia, serif" font-size="180" fill="#1c201d" text-anchor="middle">Lumen</text>
+    <circle cx="600" cy="540" r="10" fill="#E2502A"/>
+  </svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  @font-face{font-family:'Nyght Serif';src:url('fonts/NyghtSerif-Light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Nyght Serif';src:url('fonts/NyghtSerif-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Nyght Serif';src:url('fonts/NyghtSerif-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Thunder';src:url('fonts/Thunder-Black.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Thunder';src:url('fonts/Thunder-SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Thunder';src:url('fonts/Thunder-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'Archivo',sans-serif;background:#F5F0E4;color:#1c201d;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:#1c201d;color:#F5F0E4;}
+  @keyframes spinSlow{to{transform:rotate(360deg)}}
+  @keyframes ringSpin{to{transform:rotate(360deg)}}
+  @keyframes orbit{from{transform:rotate(0deg) translateX(var(--orb,26px)) rotate(0deg)}to{transform:rotate(360deg) translateX(var(--orb,26px)) rotate(-360deg)}}
+  @keyframes barDance{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+  @keyframes heroFadeA{0%{opacity:0;transform:translateY(26px)}100%{opacity:1;transform:translateY(0)}}
+  @keyframes scrollCue{0%{transform:translateY(0);opacity:1}80%{opacity:1}100%{transform:translateY(13px);opacity:0}}
+  @keyframes cueBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+  .amask{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.14em;margin-bottom:-.14em;}
+  .aword{display:inline-block;transform:translateY(115%);}
+  [data-reveal]{opacity:0;transform:translateY(40px);}
+  .pg-scroll{scrollbar-width:none;-ms-overflow-style:none;}
+  .pg-scroll::-webkit-scrollbar{display:none;width:0;height:0;}
+  .pj-cta{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:12px;align-self:flex-start;padding:18px 34px;margin-bottom:clamp(30px,5vh,56px);border-radius:999px;border:1.6px solid #1c201d;background:transparent;color:#1c201d;font-family:'Archivo',sans-serif;font-weight:600;font-size:15px;letter-spacing:.03em;text-decoration:none;}
+  .pj-cta-label{position:relative;}
+  .pj-cta-arrow{position:relative;display:flex;align-items:center;transition:transform .5s cubic-bezier(.22,1,.36,1);}
+  .pj-cta:hover .pj-cta-arrow{transform:translate(4px,-4px);}
+  [data-allwork] [data-allarrow]{transition:transform .5s cubic-bezier(.22,1,.36,1);}
+  [data-allwork]:hover [data-allarrow]{transform:translateX(-9px);}
+  [data-allwork]:hover [data-alllabel]{transform:translateX(-3px);}
+  [data-allwork] [data-alllabel]{transition:transform .5s cubic-bezier(.22,1,.36,1);}
+  [data-nextrow]:hover [data-nexttitle]{color:#E2502A;transform:translateX(clamp(14px,2.4vw,46px));}
+  [data-nextrow] [data-nexttitle]{transition:color .34s ease, transform .55s cubic-bezier(.22,1,.36,1);}
+  [data-nextrow]:hover [data-nextarrow]{opacity:1;transform:translateX(0);}
+  [data-nextrow] [data-nextarrow]{opacity:0;transform:translateX(-22px);transition:opacity .4s ease, transform .55s cubic-bezier(.22,1,.36,1);}
+  [data-morecard] [data-moretitle]{transition:color .32s ease, transform .5s cubic-bezier(.22,1,.36,1);}
+  [data-morecard]:hover [data-moretitle]{color:#E2502A;transform:translateX(clamp(8px,1.2vw,20px));}
+  [data-morecard] [data-morethumb]{transition:transform .5s cubic-bezier(.22,1,.36,1);}
+  [data-morecard]:hover [data-morethumb]{transform:scale(1.05);}
+  [data-more-grid] > a:nth-child(2){flex-direction:row-reverse;text-align:right;}
+  @media (max-width:760px){
+    [data-overview-grid]{grid-template-columns:1fr !important;gap:38px !important;}
+    [data-approach-grid]{grid-template-columns:1fr !important;gap:40px !important;}
+    [data-offset-grid]{grid-template-columns:1fr !important;gap:32px !important;}
+    [data-twoup]{grid-template-columns:1fr !important;gap:36px !important;}
+    [data-cs-grid]{grid-template-columns:1fr !important;gap:36px !important;}
+    [data-illo-grid]{grid-template-columns:1fr !important;gap:32px !important;}
+    [data-img2]{grid-template-columns:1fr !important;gap:16px !important;}
+    [data-imgtext]{grid-template-columns:1fr !important;gap:28px !important;}
+    [data-textimg]{grid-template-columns:1fr !important;gap:28px !important;}
+    [data-textimg] > div:last-child{order:-1 !important;}
+    [data-icons]{grid-template-columns:repeat(3,1fr) !important;gap:22px !important;}
+    [data-spreads]{grid-template-columns:1fr !important;gap:24px !important;}
+    [data-more-grid]{grid-template-columns:1fr !important;gap:0 !important;}
+    [data-hero-grid]{grid-template-columns:1fr !important;gap:28px !important;align-items:start !important;}
+    [data-hero-meta]{flex-direction:column !important;align-items:flex-start !important;gap:14px !important;}
+  }
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative;width:100%;">
+
+  <a href="Studio Home.dc.html" data-wordmark style="position:fixed;top:22px;left:clamp(18px,4vw,44px);z-index:901;font-family:'Thunder',sans-serif;font-size:34px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1;color:#ffffff;mix-blend-mode:difference;">PORTFOLIO</a>
+  <nav data-nav style="position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:flex-end;padding:22px clamp(18px,4vw,44px);">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="border:none;cursor:pointer;background:#1c201d;border-radius:11px;width:60px;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;">
+      <span style="{{ barTop }}"></span>
+      <span style="{{ barMid }}"></span>
+    </button>
+  </nav>
+
+  <div style="{{ menuStyle }}">
+    <div style="display:flex;flex-direction:column;gap:clamp(6px,1.4vh,16px);">
+      <a href="Studio Home.dc.html" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Home</a>
+      <a href="Studio Home.dc.html#work" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Work</a>
+      <a href="Studio Home.dc.html#about" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">About</a>
+      <a href="mailto:asylum.tal@gmail.com" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Contact</a>
+    </div>
+    <div style="margin-top:clamp(30px,6vh,64px);font-size:13px;letter-spacing:.18em;color:#1c201d;">ASYLUM.TAL@GMAIL.COM</div>
+  </div>
+
+  <header style="padding:clamp(120px,18vh,200px) clamp(16px,3vw,52px) clamp(40px,6vh,70px);max-width:1860px;margin:0 auto;">
+    <div data-hero-grid style="display:grid;grid-template-columns:{{ heroCols }};gap:clamp(30px,5vw,80px);align-items:start;">
+      <h1 style="margin:0;font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(44px,6.6vw,124px);line-height:.92;letter-spacing:-.02em;">
+        <sc-for list="{{ titleWords }}" as="tw" hint-placeholder-count="2"><span class="amask"><span class="aword">{{ tw }}</span></span> </sc-for>
+      </h1>
+      <div style="display:flex;flex-direction:column;gap:clamp(22px,3.4vh,38px);padding-bottom:clamp(6px,1.4vh,18px);">
+        <p style="margin:0;font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(24px,2.4vw,38px);line-height:1.32;letter-spacing:-.01em;color:#2c322c;text-align:left;">{{ project.subtitle }}</p>
+      </div>
+    </div>
+  </header>
+
+  <div style="max-width:1860px;margin:0 auto;padding:0 clamp(16px,3vw,52px);"><div style="height:1px;background:#1c201d;"></div></div>
+
+  <sc-if value="{{ hasHero }}" hint-placeholder-val="{{ true }}">
+  <section style="padding:clamp(22px,4vh,46px) clamp(16px,3vw,52px);max-width:1860px;margin:0 auto;">
+    <div data-reveal style="position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:{{ heroBg }};">
+      <sc-if value="{{ heroVideoSrc }}" hint-placeholder-val="">
+        <iframe src="{{ heroVideoSrc }}" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" style="position:absolute;top:50%;left:50%;width:100%;height:133.4%;transform:translate(-50%,-50%) scale(1.03);border:0;pointer-events:none;" title="Project video"></iframe>
+      </sc-if>
+      <sc-if value="{{ heroVideoFile }}" hint-placeholder-val="">
+        {{ heroVideoEl }}
+      </sc-if>
+      <sc-if value="{{ heroImgSrc }}" hint-placeholder-val="">
+        {{ heroImgEl }}
+      </sc-if>
+      <sc-if value="{{ heroPlaceholder }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:rgba(255,255,255,.95);">
+          <div style="width:78px;height:78px;border:1.5px solid rgba(255,255,255,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;">▶</div>
+          <span style="font-size:12px;font-weight:600;letter-spacing:.24em;">SHOWREEL · 02:14</span>
+        </div>
+        <div style="position:absolute;top:16px;left:16px;font-size:11px;font-weight:600;letter-spacing:.18em;color:rgba(255,255,255,.7);">[ HERO VIDEO ]</div>
+      </sc-if>
+    </div>
+  </section>
+  </sc-if>
+
+  <section style="padding:clamp(22px,4vh,46px) clamp(16px,3vw,52px);max-width:1860px;margin:0 auto;">
+    <div style="display:flex;flex-direction:column;gap:clamp(72px,11vh,140px);">
+
+      <div data-reveal>
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:clamp(12px,2vh,18px);"><span style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(24px,2.6vw,40px);letter-spacing:-.01em;color:#1c201d;">Internet Brands</span><span style="font-size:12px;font-weight:600;letter-spacing:.14em;color:#7c837c;">DESKTOP + MOBILE · SCROLL</span></div>
+        <div style="display:flex;gap:clamp(12px,1.4vw,20px);height:clamp(460px,64vh,760px);">
+          <div style="flex:1;min-width:0;max-width:600px;position:relative;border-radius:14px;overflow:hidden;background:#fff;">
+            <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ib-desktop.png" alt="" style="width:100%;height:auto;display:block;"></div>
+            <div class="pg-bar" style="position:absolute;top:10px;right:10px;bottom:10px;width:8px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
+          </div>
+          <div style="width:clamp(112px,12vw,168px);flex-shrink:0;position:relative;border-radius:16px;overflow:hidden;background:#fff;">
+            <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ib-mob.png" alt="" style="width:100%;height:auto;display:block;"></div>
+            <div class="pg-bar" style="position:absolute;top:10px;right:7px;bottom:10px;width:6px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
+          </div>
+          <div style="flex:1;min-width:150px;display:flex;align-items:center;justify-content:center;padding:0 clamp(6px,1vw,18px);">
+            <div style="max-width:42ch;">
+              <div style="margin:0 0 clamp(14px,2vh,24px);font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(30px,3.4vw,58px);line-height:1.02;letter-spacing:-.02em;color:#1c201d;">The Challenge</div>
+              <p data-words style="margin:0;font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(19px,2vw,34px);line-height:1.24;letter-spacing:-.01em;color:#1c201d;text-align:left;">
+                <sc-for list="{{ overviewAWords }}" as="w" hint-placeholder-count="18"><span class="amask"><span class="aword">{{ w }}</span></span> </sc-for>
+              </p>
+            </div>
+          </div>
+          <div style="width:clamp(150px,17vw,230px);flex-shrink:0;display:flex;flex-direction:column;gap:clamp(10px,1.4vh,18px);">
+            <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-eyes.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:9%;box-sizing:border-box;display:block;"></div>
+            <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-phone.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:6%;box-sizing:border-box;display:block;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <div style="display:flex;gap:clamp(12px,1.4vw,20px);align-items:flex-end;">
+          <div style="flex:1;min-width:150px;display:flex;align-items:center;padding:0 clamp(6px,1vw,18px);height:clamp(460px,64vh,760px);">
+            <div>
+              <div style="margin:0 0 clamp(14px,2vh,24px);font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(30px,3.4vw,58px);line-height:1.02;letter-spacing:-.02em;color:#1c201d;">The Solution</div>
+              <p data-words style="margin:0;font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(19px,2vw,34px);line-height:1.24;letter-spacing:-.01em;color:#1c201d;">
+                <sc-for list="{{ overviewBWords }}" as="w" hint-placeholder-count="18"><span class="amask"><span class="aword">{{ w }}</span></span> </sc-for>
+              </p>
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;max-width:600px;display:flex;flex-direction:column;">
+            <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:clamp(12px,2vh,18px);"><span style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(24px,2.6vw,40px);letter-spacing:-.01em;color:#1c201d;">Ranker</span><span style="font-size:12px;font-weight:600;letter-spacing:.14em;color:#7c837c;">DESKTOP + MOBILE · SCROLL</span></div>
+            <div style="height:clamp(460px,64vh,760px);position:relative;border-radius:14px;overflow:hidden;background:#fff;">
+              <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ranker-desktop.png" alt="" style="width:100%;height:auto;display:block;"></div>
+              <div class="pg-bar" style="position:absolute;top:10px;right:10px;bottom:10px;width:8px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
+            </div>
+          </div>
+          <div style="width:clamp(112px,12vw,168px);flex-shrink:0;height:clamp(460px,64vh,760px);position:relative;border-radius:16px;overflow:hidden;background:#fff;">
+            <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ranker-mob.png" alt="" style="width:100%;height:auto;display:block;"></div>
+            <div class="pg-bar" style="position:absolute;top:10px;right:7px;bottom:10px;width:6px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
+          </div>
+          <div style="width:clamp(150px,17vw,230px);flex-shrink:0;height:clamp(460px,64vh,760px);display:flex;flex-direction:column;gap:clamp(10px,1.4vh,18px);">
+            <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-boards.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:9%;box-sizing:border-box;display:block;"></div>
+            <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-projector.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:9%;box-sizing:border-box;display:block;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div style="max-width:1860px;margin:0 auto;padding:clamp(30px,6vh,80px) clamp(16px,3vw,52px);"><div style="height:1px;background:#1c201d;"></div></div>
+
+  <section style="padding:clamp(30px,5vh,72px) clamp(16px,3vw,52px);max-width:1860px;margin:0 auto;">
+    <div style="width:min(100%,1080px);margin:0 auto;">
+      <div data-illo-grid style="display:grid;grid-template-columns:clamp(240px,30vw,380px) 1fr;gap:clamp(44px,6vw,110px);align-items:start;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.4vw,20px);">
+          <sc-for list="{{ icons }}" as="ic" hint-placeholder-count="4">
+            <div data-reveal style="position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:#ffffff;display:flex;align-items:center;justify-content:center;padding:clamp(20px,3vw,40px);box-sizing:border-box;">{{ ic.el }}</div>
+          </sc-for>
+        </div>
+        <div style="margin-left:clamp(-40px,-2.4vw,-8px);margin-top:clamp(34px,6vh,80px);">
+          <p data-words style="margin:0;font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(26px,3vw,52px);line-height:1.16;letter-spacing:-.015em;color:#1c201d;">
+            <sc-for list="{{ approachWords }}" as="w" hint-placeholder-count="16"><span class="amask"><span class="aword">{{ w }}</span></span> </sc-for>
+          </p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,20px);margin-top:clamp(20px,3.4vh,46px);">
+        <sc-for list="{{ pcGifs }}" as="g" hint-placeholder-count="4">
+          <div data-reveal style="position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:#ffffff;">{{ g.el }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:0 clamp(16px,3vw,52px);max-width:1860px;margin:clamp(64px,11vh,130px) auto 0;">
+    <div data-more-grid style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,72px);border-top:1px solid #1c201d;border-bottom:1px solid #1c201d;">
+      <sc-for list="{{ moreProjects }}" as="p" hint-placeholder-count="2">
+        <a data-morecard href="{{ p.href }}" style="display:flex;align-items:center;gap:clamp(18px,2vw,36px);padding:clamp(48px,8vh,104px) 0;cursor:pointer;">
+          <div data-morethumb style="flex-shrink:0;position:relative;width:clamp(104px,12vw,196px);aspect-ratio:16/10;border-radius:12px;overflow:hidden;background:{{ p.bg }};">{{ p.thumbEl }}</div>
+          <span data-moretitle style="font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(28px,4vw,64px);letter-spacing:-.01em;line-height:1.02;color:#1c201d;">{{ p.title }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="position:relative;padding:clamp(50px,8vh,90px) clamp(16px,3vw,52px) 0;overflow:hidden;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:30px;max-width:1860px;margin:0 auto;">
+      <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">
+        <div style="width:26px;height:26px;border:2px solid #1c201d;transform:rotate(45deg);position:relative;"><div style="position:absolute;inset:5px;border:2px solid #1c201d;border-radius:50%;"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:11px;font-size:13px;font-weight:600;letter-spacing:.14em;">
+        <a href="#" style="color:#1c201d;">INSTAGRAM</a>
+        <a href="#" style="color:#1c201d;">LINKEDIN</a>
+        <a href="#" style="color:#1c201d;">VIMEO</a>
+      </div>
+    </div>
+    <div style="font-family:'Thunder',sans-serif;font-size:clamp(120px,34vw,560px);font-weight:800;letter-spacing:.005em;text-transform:uppercase;line-height:.82;color:#1c201d;margin-top:clamp(30px,6vh,70px);margin-bottom:-.08em;text-align:center;">PORTFOLIO</div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;padding:22px 0;max-width:1860px;margin:0 auto;font-size:12px;font-weight:600;letter-spacing:.1em;color:#1c201d;">
+      <span>PORTFOLIO © 2026</span>
+      <a href="mailto:asylum.tal@gmail.com" style="color:#1c201d;">ASYLUM.TAL@GMAIL.COM</a>
+      <a href="Studio Home.dc.html" style="color:#1c201d;">BACK TO HOME ↑</a>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;100%&quot;}}">
+class Component extends DCLogic {
+  state = { menuOpen: false };
+
+  static PALETTES = [
+    { c: ['#3f5e4e','#4d7362','#2c473b','#5c8874','#1e332a','#6f9d88'], a: '#E2502A' },
+    { c: ['#3f6c9e','#5a86b8','#2f5580','#6a93c0','#27496b','#86a9cf'], a: '#E2502A' },
+    { c: ['#b5482f','#c75b39','#8f3826','#d4724f','#722a1c','#e0936f'], a: '#2f8f86' },
+    { c: ['#46695a','#4f7a5f','#36504a','#6a937a','#293f39','#86ad90'], a: '#cf8a3a' },
+    { c: ['#5f5384','#6a5a86','#473d63','#8275a6','#332c4a','#9a8cc0'], a: '#d4a23a' },
+    { c: ['#2f6f74','#357f86','#234f53','#4f9aa0','#173537','#73b2b4'], a: '#d4674a' },
+    { c: ['#4a5560','#5b6772','#39424b','#6f7c88','#2a3138','#8a96a2'], a: '#d98a3a' },
+    { c: ['#3d4a80','#505d99','#2c3760','#6975b0','#1f284a','#8f9ad0'], a: '#e0913f' },
+    { c: ['#8a3b6e','#a34d84','#6e2c56','#bd6fa0','#4f1f3d','#d293ba'], a: '#3a9a8f' },
+    { c: ['#8a6d3b','#a3854b','#6e552c','#bd9f66','#4f3d1f','#d6bb86'], a: '#3a6f9a' },
+    { c: ['#454b46','#565d57','#343935','#6a726b','#222523','#7c857d'], a: '#E2502A' },
+  ];
+
+  static VARIANTS = [
+    { heroCols: '1.15fr .85fr', imgAspect: '4/3', fullAspect: '21/9', cols2: '1fr 1fr', colsIT: '1fr 1fr', imgOrderA: '0', colsTI: '1fr 1fr', imgOrderB: '0' },
+    { heroCols: '1fr 1fr', imgAspect: '16/10', fullAspect: '16/9', cols2: '1.5fr .85fr', colsIT: '.85fr 1.2fr', imgOrderA: '2', colsTI: '1.2fr .85fr', imgOrderB: '-1' },
+    { heroCols: '1.3fr .7fr', imgAspect: '5/4', fullAspect: '2/1', cols2: '.85fr 1.5fr', colsIT: '1.3fr .8fr', imgOrderA: '0', colsTI: '.8fr 1.3fr', imgOrderB: '0' },
+  ];
+
+  static PROJECTS = [
+    {
+      title: 'Goodvertising', category: 'CASE STUDY · EDITORIAL WEB', tagline: 'WHITE PAPER, REIMAGINED', client: 'Primis', year: '2024', video: '1206440233',
+      liveUrl: 'https://contact.primis.tech/reinventing-goodvertising',
+      subtitle: 'Primis’ “Goodvertising” looks at how brands are expected to take a more active role in culture.',
+      bottomImg: 'assets/gv-industry-changing.png',
+      overview: 'The project started as a case study, but the format felt limiting. Most case studies reduce ideas into slides or PDFs. I wanted something closer to reading. The direction came from print magazines — where layout, pacing, and typography shape how content is understood.',
+      approach: 'Every illustration in the piece is drawn by hand — made, not sourced. Each chapter opens on an original drawing, so the read carries a little of the imperfection that makes a printed page feel alive.',
+      quote: 'The goal wasn’t to simplify the idea, but to give it the right format',
+      midText: 'Instead of compressing everything, the site allows space. Sections are structured more like spreads than slides. A case study designed as an editorial experience.',
+      meta: [ { label: 'ROLE', value: 'Design, Art Direction, Build' }, { label: 'SERVICES', value: 'Editorial Web, Typography, Motion' }, { label: 'DELIVERABLES', value: 'Eight-chapter website' }, { label: 'TIMELINE', value: '2024' } ],
+      stillA: 'Chapter openers — each spread set like a magazine feature, type leading the eye in.', stillB: 'The read in motion — pacing and pauses built to feel like turning a page.',
+      illos: ['assets/gulot.png', 'assets/handstexting.png', 'assets/gv-cover.png'],
+      icons: [
+        { src: 'assets/book.gif', label: 'Responsibility' },
+        { src: 'assets/co2.gif', label: 'Climate' },
+        { src: 'assets/faces.gif', label: 'Inclusion' },
+        { src: 'assets/lock.gif', label: 'Trust' },
+        { src: 'assets/scale.gif', label: 'Balance' },
+        { src: 'assets/smoke.gif', label: 'Transparency' },
+      ],
+      spreads: ['assets/gv-spread-1.png', 'assets/gv-spread-2.png'],
+    },
+    {
+      title: 'Primis case studies', category: 'CASE STUDY TEMPLATE · HUBSPOT', tagline: 'ONE TEMPLATE, EVERY CLIENT', client: 'Primis', year: '2025',
+      liveUrl: 'https://contact.primis.tech/internet-brands-case-study',
+      noHero: true,
+      heroImg: 'assets/primis-hero-banner.png',
+      heroImgContain: true,
+      subtitle: 'Primis needed a case-study format that felt custom for every client — built inside HubSpot, where speed comes easy but visual freedom does not.',
+      overview: 'HubSpot gets a page live fast, but its templates fight you the moment you want them to look like more than a form. We designed a modular case-study system that works within those limits and still reads like a bespoke page — hero, client band, pull-quote, challenge, solution and animated results, all reusable blocks a marketer can fill in without touching the design.',
+      approach: 'Each case study gets its own world — a unique illustration and its own family of animated gifs, drawn fresh for every client so no two pages ever feel the same.',
+      quote: 'A template that looks bespoke every time — inside HubSpot’s limits',
+      midText: 'Internet Brands ran in pink, Ranker in blue — one build, two brands, and a results section that lets the numbers do the talking.',
+      meta: [ { label: 'ROLE', value: 'Design, Art Direction, Build' }, { label: 'SERVICES', value: 'HubSpot Templating, Web Design, Illustration' }, { label: 'DELIVERABLES', value: 'Reusable case-study template' }, { label: 'TIMELINE', value: '2025' } ],
+      illos: ['assets/primis-folders.gif', 'assets/primis-eyes.gif', 'assets/primis-phone.gif'],
+      icons: [
+        { src: 'assets/primis-icon-seamless.gif', label: 'Seamless Design' },
+        { src: 'assets/primis-icon-float.gif', label: 'Float Capabilities' },
+        { src: 'assets/primis-icon-contextual.gif', label: 'Contextual' },
+        { src: 'assets/primis-icon-views.gif', label: 'Increased Views' },
+      ],
+      stillA: 'Internet Brands — desktop.', stillB: 'Ranker — desktop.',
+      stillCaptions: ['Internet Brands — desktop, top to bottom.', 'Internet Brands — the same page on mobile.', 'Ranker — desktop, reskinned in blue.', 'Ranker — mobile.'],
+      spreads: ['assets/primis-ib-desktop.png', 'assets/primis-ib-mob.png', 'assets/primis-ranker-desktop.png', 'assets/primis-ranker-mob.png'],
+      pcEyebrow: 'Featured on GitHub',
+      pcText: 'The four placement modes — Instream, Accompanying Content, Standalone Slider and Slideshow — were drawn as a set and featured in Primis’ GitHub, showing developers every way the discovery unit can live inside a page.',
+      pcGifs: ['assets/primis-lap-instream.gif', 'assets/primis-lap-accompanying.gif', 'assets/primis-lap-slider.gif', 'assets/primis-lap-slideshow.gif'],
+      bottomImg: 'assets/primis-ib-results.png', bottomImgAspect: '1360 / 430',
+    },
+    {
+      title: 'Vega', category: 'WEBSITE · PRODUCT MARKETING', tagline: 'UTM PLATFORM SITE', client: 'High Lander', year: '2025',
+      heroImg: 'assets/vega-hero-future.png',
+      videoFile: 'assets/vega.mp4',
+      bottomImg: 'assets/vega-hero-future.png',
+      bottomImgAspect: '1892 / 816',
+      subtitle: 'High Lander needed a public face for Vega, their unmanned-traffic-management platform — something that could speak to regulators, operators and enterprises without burying them in acronyms. We designed and built the site that does it.',
+      overview: 'Vega manages airspace for drones, deconfliction, geo-awareness, counter-UAS — a genuinely complex product. The brief was to make that complexity legible: a site technical enough for an aviation authority, clear enough for a first-time visitor.',
+      approach: 'The service list was the hardest part to solve — nine capabilities, each one dense. We turned them into a grid of tiles that hold a headline at rest and open into a full explanation on interaction, so the page stays calm until you ask it a question.',
+      quote: 'Enterprise airspace software, explained without the jargon',
+      midText: 'Vega was the first UTM system to receive a license to manage UAS traffic nationwide — a fact the site is built to earn, not just state.',
+      meta: [ { label: 'ROLE', value: 'Design, Art Direction, Build' }, { label: 'SERVICES', value: 'Web Design, Front-End Development' }, { label: 'DELIVERABLES', value: 'Marketing website' }, { label: 'TIMELINE', value: '2025' } ],
+      stillA: 'VegaHub services — nine capabilities at rest, set as a calm tile grid.', stillB: 'Same grid, interrogated — a tile opens to explain itself on hover.',
+      spreads: ['assets/vega-services-grid.png', 'assets/vega-services-hover.png'],
+      stillsAspect: '16/10',
+    },
+    {
+      title: 'Atlas', category: 'TITLE SEQUENCE', tagline: 'OPENING TITLES', client: 'Atlas Films', year: '2025',
+      subtitle: 'An opening title sequence for Atlas — typography, texture, and score locked together into ninety seconds that set the tone for the whole film.',
+      overview: 'We designed the first ninety seconds the audience sees. The titles establish place and mood through type that behaves like a character — entering, lingering, dissolving.',
+      approach: 'We cut to the score first, letting the music dictate every type entrance before a single frame was designed.',
+      quote: 'Ninety seconds that tell you exactly what film you are about to watch',
+      midText: 'Grain, light leaks, and hand-set type gave the sequence a tactile warmth that survives compression and scales from phone to cinema.',
+      meta: [ { label: 'ROLE', value: 'Design, Animation, Edit' }, { label: 'SERVICES', value: 'Title Design, Typography, Compositing' }, { label: 'DELIVERABLES', value: 'Main titles, End crawl' }, { label: 'TIMELINE', value: '6 weeks · 2025' } ],
+      stillA: 'Main-on-end study — type entrances cut to the score.', stillB: 'Texture pass — grain and light leaks layered for warmth.',
+    },
+    {
+      title: 'Cardinal', category: 'CAMPAIGN · TOOLKIT', tagline: 'BROADCAST TOOLKIT', client: 'Cardinal Group', year: '2024',
+      subtitle: 'A campaign and broadcast toolkit for Cardinal — one motion system flexible enough to run across TV, social, and out-of-home for a full season.',
+      overview: 'Cardinal needed a season-long campaign that any team could extend. We built a toolkit of templates, transitions, and rules that keep every execution on-brand without us in the room.',
+      approach: 'We designed the system as a set of constraints, not assets — a grid, a palette, and three signature moves that combine endlessly.',
+      quote: 'One system, a hundred executions, zero loss of voice',
+      midText: 'The toolkit shipped with editable templates and a short film showing the team exactly how the pieces snap together.',
+      meta: [ { label: 'ROLE', value: 'Art Direction, System Design' }, { label: 'SERVICES', value: 'Campaign, Templates, Guidelines' }, { label: 'DELIVERABLES', value: 'Toolkit, Templates, How-to film' }, { label: 'TIMELINE', value: '12 weeks · 2024' } ],
+      stillA: 'Template set — broadcast bumpers built from shared parts.', stillB: 'Out-of-home adaptation — the same system, static.',
+    },
+    {
+      title: 'Halcyon', category: 'SHORT FILM', tagline: 'ORIGINAL SHORT', client: 'Halcyon Studio', year: '2026',
+      subtitle: 'An original animated short for Halcyon — a self-contained story told entirely through design, movement, and sound.',
+      overview: 'Halcyon was a chance to tell a complete story in four minutes. We handled everything from script and boards to final animation and sound design.',
+      approach: 'We built the world before the plot — once the rules of the place were clear, the story almost staged itself.',
+      quote: 'Four minutes that feel like a place you have actually been',
+      midText: 'Every shot was designed to read as a still and move as a scene, so the film holds up frozen or in motion.',
+      meta: [ { label: 'ROLE', value: 'Direction, Design, Animation' }, { label: 'SERVICES', value: 'Story, Design, Sound' }, { label: 'DELIVERABLES', value: 'Short film, Stills, Trailer' }, { label: 'TIMELINE', value: '16 weeks · 2026' } ],
+      stillA: 'World study — the rules of the place, set before the story.', stillB: 'Key frame — a shot built to read still or moving.',
+    },
+    {
+      title: 'Northwind', category: 'BRAND IDENTITY', tagline: 'IDENTITY REFRESH', client: 'Northwind Co.', year: '2025',
+      subtitle: 'A full identity refresh for Northwind — wordmark, palette, and a motion signature that ties the brand together in movement.',
+      overview: 'Northwind had outgrown its old identity. We rebuilt it from the wordmark out, giving the brand a confident new voice and a motion signature that makes it recognizable in a glance.',
+      approach: 'We treated motion as part of the logo, not an afterthought — the mark was designed to move from day one.',
+      quote: 'An identity that is recognizable before you even read it',
+      midText: 'The refresh rolled out across product, packaging, and film from a single source of truth, so everything stayed in sync.',
+      meta: [ { label: 'ROLE', value: 'Brand Direction, Design' }, { label: 'SERVICES', value: 'Identity, Motion, Guidelines' }, { label: 'DELIVERABLES', value: 'Wordmark, System, Motion kit' }, { label: 'TIMELINE', value: '9 weeks · 2025' } ],
+      stillA: 'Wordmark study — the mark designed to move from day one.', stillB: 'Palette in motion — color transitions on a shared curve.',
+    },
+    {
+      title: 'Pace', category: 'EXPLAINER · MOTION', tagline: 'HOW IT WORKS', client: 'Pace App', year: '2024',
+      subtitle: 'A how-it-works explainer for Pace — turning a complex product into a sixty-second story anyone can follow.',
+      overview: 'Pace does something genuinely new, which made it genuinely hard to explain. We distilled it into a single clear narrative carried by motion, not jargon.',
+      approach: 'We wrote the script to one sentence per idea, then let the animation do the explaining the words could not.',
+      quote: 'Complex made obvious — in about the length of an elevator ride',
+      midText: 'The same explainer was cut into micro-loops for onboarding, so the story keeps teaching long after the first watch.',
+      meta: [ { label: 'ROLE', value: 'Direction, Design, Animation' }, { label: 'SERVICES', value: 'Script, Explainer, UI Motion' }, { label: 'DELIVERABLES', value: 'Explainer film, Onboarding loops' }, { label: 'TIMELINE', value: '7 weeks · 2024' } ],
+      stillA: 'Storyboard — one idea per frame, no jargon.', stillB: 'Onboarding loops — the story cut into micro-moments.',
+    },
+    {
+      title: 'Meridian', category: 'GEN-AI TOOLS', tagline: 'AI CREATIVE SYSTEM', client: 'Meridian AI', year: '2026',
+      subtitle: 'A creative system for Meridian — designing how an AI product looks, moves, and communicates as it thinks.',
+      overview: 'Meridian needed a visual language for intelligence in motion. We designed the states, transitions, and feedback that make the AI feel responsive, trustworthy, and alive.',
+      approach: 'We designed the waiting moments first — because with AI, how it behaves while thinking is the whole experience.',
+      quote: 'Designing how intelligence looks while it is still thinking',
+      midText: 'Generative motifs let the system produce endless on-brand variation, so no two sessions ever feel identical.',
+      meta: [ { label: 'ROLE', value: 'Creative Direction, System Design' }, { label: 'SERVICES', value: 'Product Motion, Generative, Brand' }, { label: 'DELIVERABLES', value: 'Motion system, Generative kit' }, { label: 'TIMELINE', value: '11 weeks · 2026' } ],
+      stillA: 'Thinking states — the waiting moments, designed first.', stillB: 'Generative motif — endless on-brand variation.',
+    },
+    {
+      title: 'Beacon', category: 'SMB CAMPAIGN', tagline: 'GROWTH CAMPAIGN', client: 'Beacon', year: '2025',
+      subtitle: 'A growth campaign for Beacon — a warm, human motion system built to convert across paid social at speed and scale.',
+      overview: 'Beacon needed performance creative that did not look like performance creative. We built a warm, characterful system that tests well and still feels like a brand.',
+      approach: 'We designed for the first half-second — the system leads with a hook that earns the next two.',
+      quote: 'Performance creative that still feels like a brand worth trusting',
+      midText: 'A library of swappable hooks and endings let the team launch dozens of variants a week from one master.',
+      meta: [ { label: 'ROLE', value: 'Art Direction, Design' }, { label: 'SERVICES', value: 'Campaign, Performance, Social' }, { label: 'DELIVERABLES', value: 'Ad system, Variant library' }, { label: 'TIMELINE', value: '6 weeks · 2025' } ],
+      stillA: 'Hook study — designed for the first half-second.', stillB: 'Variant library — swappable openings and endings.',
+    },
+    {
+      title: 'Studio Projects', category: 'SELECTED EXPERIMENTS', tagline: 'STUDIO LAB', client: 'Self-initiated', year: '2020–26',
+      subtitle: 'A collection of self-initiated experiments — the studio lab where we test techniques, tools, and ideas that later shape client work.',
+      overview: 'Not everything we make is for a client. These are the experiments — the loops, tools, and tests where we push a technique until it becomes part of how we work.',
+      approach: 'We give ourselves one constraint and one weekend, and see what survives Monday.',
+      quote: 'The work we make for no one is where everything starts',
+      midText: 'Many of these started as throwaways and quietly became the backbone of projects you have already scrolled past.',
+      meta: [ { label: 'ROLE', value: 'Self-initiated' }, { label: 'SERVICES', value: 'R&D, Technique, Tools' }, { label: 'DELIVERABLES', value: 'Experiments, Loops, Tools' }, { label: 'TIMELINE', value: 'Ongoing' } ],
+      stillA: 'Weekend test — one constraint, one weekend.', stillB: 'Technique study — a loop pushed until it became a tool.',
+    },
+  ];
+
+  componentDidMount() {
+    const heroVid = document.querySelector('video[data-hero-video]');
+    if (heroVid) { heroVid.play && heroVid.play().catch(() => {}); }
+    this._running = true;
+    this._ticks = 0;
+    this._entered = [];
+    this._wordBlocks = [];
+    const drive = () => {
+      if (!this._running) return;
+      this._loop();
+      this._raf = requestAnimationFrame(drive);
+    };
+    this._raf = requestAnimationFrame(drive);
+    // Safety net: if the RAF reveal loop ever stalls (backgrounded tab, throttling,
+    // mount race), force any reveal/word block that is already within the viewport
+    // visible after a short delay — so the page can never be left blank on load,
+    // while below-the-fold content still animates in on scroll.
+    this._safety = setTimeout(() => {
+      const vh = window.innerHeight || 800;
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0 && getComputedStyle(el).opacity === '0') {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+      });
+      document.querySelectorAll('[data-words] .aword, h1 .aword').forEach((w) => {
+        const b = w.closest('[data-words]') || w.closest('h1');
+        if (!b) return;
+        const r = b.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) w.style.transform = 'none';
+      });
+    }, 1800);
+    this._cueTimer = setInterval(() => {
+      document.querySelectorAll('.pg-scroll').forEach((sc) => {
+        if (sc.__cueBound) return;
+        sc.__cueBound = true;
+        const fill = sc.parentNode && sc.parentNode.querySelector('.pg-bar-fill');
+        const upd = () => {
+          if (!fill) return;
+          const h = sc.clientHeight, sh = sc.scrollHeight || 1;
+          const ratio = Math.min(1, h / sh);
+          const maxTop = sh - h;
+          const p = maxTop > 0 ? sc.scrollTop / maxTop : 0;
+          fill.style.height = (ratio * 100) + '%';
+          fill.style.top = (p * (100 - ratio * 100)) + '%';
+        };
+        sc.addEventListener('scroll', upd, { passive: true });
+        upd();
+      });
+    }, 400);
+  }
+  componentWillUnmount() {
+    this._running = false;
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._cueTimer) clearInterval(this._cueTimer);
+    if (this._safety) clearTimeout(this._safety);
+  }
+
+  _now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
+
+  _loop() {
+    if (!this._running) return;
+    this._ticks++;
+    const now = this._now();
+    const vh = window.innerHeight || 800;
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+    // discover newly entered reveal elements
+    const reveals = document.querySelectorAll('[data-reveal]');
+    for (let i = 0; i < reveals.length; i++) {
+      const el = reveals[i];
+      if (el.__t0) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.9 && r.bottom > 0) el.__t0 = now;
+      if (!el.__t0) continue;
+      this._entered.push(el);
+    }
+    // re-assert (and ease in) every entered reveal — continuous, survives per-frame clear
+    for (let i = 0; i < this._entered.length; i++) {
+      const el = this._entered[i];
+      const p = Math.min(1, (now - el.__t0) / 760);
+      const e = ease(p);
+      el.style.opacity = String(e);
+      el.style.transform = 'translateY(' + (40 * (1 - e)) + 'px)';
+    }
+
+    // discover newly entered word blocks (hero h1 + overview)
+    const blocks = document.querySelectorAll('[data-words], h1');
+    for (let i = 0; i < blocks.length; i++) {
+      const b = blocks[i];
+      if (b.__reg || !b.querySelector('.aword')) continue;
+      const r = b.getBoundingClientRect();
+      if (r.top < vh * 0.92 && r.bottom > vh * 0.02) {
+        b.__reg = true;
+        this._wordBlocks.push({ words: Array.prototype.slice.call(b.querySelectorAll('.aword')), t0: now });
+      }
+    }
+    // re-assert (and tween) every triggered word block — continuous
+    for (let j = 0; j < this._wordBlocks.length; j++) {
+      const wb = this._wordBlocks[j];
+      for (let i = 0; i < wb.words.length; i++) {
+        const lt = (now - wb.t0) - i * 38;
+        const p = lt <= 0 ? 0 : Math.min(1, lt / 520);
+        wb.words[i].style.transform = 'translateY(' + (115 * (1 - ease(p))) + '%)';
+      }
+    }
+  }
+
+  renderVals() {
+    const open = this.state.menuOpen;
+    const FLAT = ['#3f6c9e', '#c75b39', '#4f7a5f', '#6a5a86', '#a8493f', '#357f86'];
+    const slugify = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const ALL = Component.PROJECTS;
+    let slug = 'primis-case-studies';
+    let data = ALL.find((p) => slugify(p.title) === slug) || ALL[0];
+    const idx = ALL.indexOf(data);
+    const pal = Component.PALETTES[idx % Component.PALETTES.length];
+    const variant = Component.VARIANTS[idx % Component.VARIANTS.length];
+
+    const project = {
+      category: data.category, title: data.title, tagline: data.tagline,
+      subtitle: data.subtitle, client: data.client, year: data.year,
+    };
+    const overview = data.overview;
+    const approach = data.approach;
+    const quote = data.quote;
+    const midText = data.midText;
+    const metaList = data.meta;
+    const credits = [];
+    const caption1 = '';
+
+    const fileMap = { 'goodvertising': 'Goodvertising.dc.html', 'vega': 'Vega.dc.html', 'primis-case-studies': 'Primis Case Studies.dc.html' };
+    const projFileMap = { 'goodvertising':'Goodvertising.dc.html', 'vega-orion':'Vega.dc.html', 'vega':'Vega.dc.html', 'motion-campaigns':'Motion.dc.html', 'sellers-guide':'Sellers Guide.dc.html', 'primis-case-studies':'Primis Case Studies.dc.html' };
+    const projHref = (t) => projFileMap[slugify(t)] || ('Project Page.dc.html?project=' + slugify(t));
+    // "more projects" = the next two REAL projects (Print & Events hidden), wrapping around
+    const __real = ['Goodvertising','Vega & Orion','Motion campaigns','Sellers.guide','Primis case studies'];
+    const __ci = Math.max(0, __real.findIndex((t) => slugify(t) === slug));
+    const __pick = [__real[(__ci + 1) % __real.length], __real[(__ci + 2) % __real.length]];
+    const __media = { 'goodvertising':{v:'1206440233'}, 'vega-orion':{f:'assets/vega.mp4'}, 'motion-campaigns':{v:'1207005717'}, 'sellers-guide':{g:'assets/sg-vines.gif'}, 'primis-case-studies':{v:'1206862673'} };
+    const mkThumb = (t) => { const m = __media[(t||'').toLowerCase().replace(/[^a-z0-9]+/g,'-')]; if(!m) return null; const box={position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'cover'}; if(m.g) return React.createElement('img',{src:m.g,alt:'',loading:'lazy',style:box}); if(m.f) return React.createElement('video',{src:m.f,autoPlay:true,muted:true,loop:true,playsInline:true,style:box}); return React.createElement('iframe',{src:'https://player.vimeo.com/video/'+m.v+'?background=1&autoplay=1&muted=1&loop=1&autopause=0',frameBorder:'0',allow:'autoplay',title:'',style:{position:'absolute',top:'50%',left:'50%',width:'100%',height:'100%',transform:'translate(-50%,-50%) scale(1.18)',border:'none',pointerEvents:'none'}}); };
+    const moreProjects = __pick.map((t, i) => ({ title: t, bg: pal.c[i === 0 ? 0 : 2], href: projHref(t), thumbEl: mkThumb(t) }));
+    const mkStill = (src, mode) => src ? React.createElement('img', { src: src, alt: '', loading: 'lazy', style: mode === 'cover' ? { width: '100%', height: '100%', objectFit: 'cover', display: 'block' } : { width: '100%', height: 'auto', display: 'block' } }) : null;
+    const stillsMode = data.stillsAspect ? 'cover' : 'scroll';
+    const spreadList = data.spreads || [];
+    const capList = data.stillCaptions || [data.stillA, data.stillB];
+    const stills = spreadList.map(function (src, i) {
+      return {
+        bg: pal.c[3 + (i % 2)], caption: capList[i] || '',
+        el: mkStill(src, stillsMode), noEl: !src, hasEl: !!src,
+        showBar: stillsMode !== 'cover' && !!src,
+      };
+    });
+    const motifBase = 'width:clamp(40px,4.5vw,64px);height:clamp(40px,4.5vw,64px);';
+    const iconSlots = [
+      { label: 'Logo loop', motif: motifBase + 'border:2px solid #1c201d;border-radius:50%;border-top-color:transparent;animation:ringSpin 6s linear infinite;' },
+      { label: 'Wordmark', motif: motifBase + 'background:#1c201d;border-radius:8px;animation:spinSlow 9s linear infinite;' },
+      { label: 'Accent', motif: 'width:clamp(34px,4vw,54px);height:clamp(34px,4vw,54px);background:#E2502A;border-radius:50%;animation:barDance 1.4s ease-in-out infinite;' },
+      { label: 'Transition', motif: motifBase + 'border:2px solid #1c201d;animation:spinSlow 7s linear infinite;' },
+      { label: 'Sound mark', motif: 'width:clamp(40px,4.5vw,64px);height:clamp(40px,4.5vw,64px);background:repeating-linear-gradient(90deg,#1c201d 0 3px,transparent 3px 7px);animation:barDance 1.2s ease-in-out infinite;' },
+    ];
+
+    return {
+      rootRef: (el) => { this.rootEl = el; },
+      project,
+      titleWords: project.title.split(' '),
+      overviewWords: overview.split(' '),
+      overviewAWords: (function () { var parts = overview.split('. '); return (parts[0] + (parts.length > 1 ? '.' : '')).split(' '); })(),
+      overviewBWords: (function () { var parts = overview.split('. '); return parts.slice(1).join('. ').split(' '); })(),
+      approachWords: approach.split(' '),
+      caption1Words: caption1.split(' '),
+      quoteWords: quote.split(' '),
+      midTextWords: midText.split(' '),
+      moreProjects,
+      card1El: (data.illos && data.illos[0]) ? React.createElement('img', { src: data.illos[0], alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', padding: 'clamp(10px,1.6vw,26px)', display: 'block' } }) : null,
+      card2El: (data.illos && data.illos[1]) ? React.createElement('img', { src: data.illos[1], alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', padding: 'clamp(10px,1.6vw,26px)', display: 'block' } }) : null,
+      card3El: (data.illos && data.illos[2]) ? React.createElement('img', { src: data.illos[2], alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' } }) : null,
+      noCard1: !(data.illos && data.illos[0]),
+      noCard2: !(data.illos && data.illos[1]),
+      noCard3: !(data.illos && data.illos[2]),
+      cardBg1: (data.illos && data.illos[0]) ? '#ffffff' : pal.c[1],
+      cardBg2: (data.illos && data.illos[1]) ? '#ffffff' : pal.c[2],
+      cardBg3: (data.illos && data.illos[2]) ? '#ffffff' : pal.c[3],
+      cardAspect1: (data.illos && data.illos[0]) ? '4 / 3' : '16/11',
+      cardAspect2: (data.illos && data.illos[1]) ? '4 / 3' : '16/11',
+      cardAspect3: (data.illos && data.illos[2]) ? '1920 / 2451' : variant.imgAspect,
+      hasIllos: !!(data.illos && data.illos.length),
+      approachCols: (data.illos && data.illos.length) ? '1fr 1fr' : variant.colsIT,
+      approachGap: (data.illos && data.illos.length) ? 'clamp(16px,2.2vw,30px)' : 'clamp(36px,5vw,96px)',
+      icons: (data.icons || []).map(function (ic) { return { label: ic.label, el: React.createElement('img', { src: ic.src, alt: '', loading: 'lazy', style: { width: '100%', height: '100%', objectFit: 'contain', display: 'block' } }) }; }),
+      iconCols: (data.icons && data.icons.length === 4) ? 'repeat(2,1fr)' : 'repeat(3,1fr)',
+      hasIcons: !!(data.icons && data.icons.length),
+      noIcons: !(data.icons && data.icons.length),
+      pcGifs: (data.pcGifs || []).map(function (src) { return { el: React.createElement('img', { src: src, alt: '', loading: 'lazy', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', padding: 'clamp(6px,1vw,16px)', display: 'block' } }) }; }),
+      hasPcGifs: !!(data.pcGifs && data.pcGifs.length),
+      pcEyebrow: data.pcEyebrow || '',
+      pcTextWords: (data.pcText || '').split(' '),
+      heroVideoSrc: data.video ? ('https://player.vimeo.com/video/' + data.video + '?background=1&autopause=0&muted=1&loop=1') : '',
+      heroVideoFile: data.videoFile || '',
+      heroVideoEl: data.videoFile ? React.createElement('video', { src: data.videoFile, 'data-hero-video': true, preload: 'auto', autoPlay: true, muted: true, loop: true, playsInline: true, style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' } }) : null,
+      heroImgSrc: (!data.video && !data.videoFile) ? (data.heroImg || '') : '',
+      heroImgEl: (!data.video && !data.videoFile && data.heroImg) ? React.createElement('img', { src: data.heroImg, alt: '', style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: data.heroImgContain ? 'contain' : 'cover', display: 'block' } }) : null,
+      heroBg: (data.heroImg && data.heroImgContain) ? '#ffffff' : pal.c[0],
+      hasHero: !data.noHero,
+      heroPlaceholder: !data.video && !data.videoFile && !data.heroImg,
+      bottomImgEl: data.bottomImg ? React.createElement('img', { src: data.bottomImg, alt: '', loading: 'lazy', style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: '18px' } }) : null,
+      noBottomImg: !data.bottomImg,
+      bottomImgAspect: data.bottomImg ? (data.bottomImgAspect || '1200 / 628') : variant.imgAspect,
+      c0: pal.c[0], c1: pal.c[1], c2: pal.c[2], c3: pal.c[3], c4: pal.c[4], c5: pal.c[5],
+      accent: pal.a,
+      heroCols: variant.heroCols, imgAspect: variant.imgAspect, fullAspect: variant.fullAspect,
+      cols2: variant.cols2, colsIT: variant.colsIT, imgOrderA: variant.imgOrderA, colsTI: variant.colsTI, imgOrderB: variant.imgOrderB,
+      still1bg: pal.c[1],
+      still1label: 'KEY VISUAL',
+      stills,
+      stillsAspect: data.stillsAspect || '4/5',
+      iconSlots,
+      metaList,
+      liveUrl: data.liveUrl || '#',
+      credits,
+      toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      barTop: { display: 'block', width: '22px', height: '2px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(3.5px) rotate(45deg)' : 'none' },
+      barMid: { display: 'block', width: '22px', height: '2px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(-3.5px) rotate(-45deg)' : 'none' },
+      menuStyle: {
+        position: 'fixed', inset: 0, zIndex: 880,
+        background: '#F5F0E4',
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        padding: '0 clamp(16px,3vw,52px)',
+        opacity: open ? 1 : 0,
+        pointerEvents: open ? 'auto' : 'none',
+        transform: open ? 'none' : 'translateY(-2%)',
+        transition: 'opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1)',
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
