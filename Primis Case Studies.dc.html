@@ -66,6 +66,9 @@
     [data-twoup]{grid-template-columns:1fr !important;gap:36px !important;}
     [data-cs-grid]{grid-template-columns:1fr !important;gap:36px !important;}
     [data-illo-grid]{grid-template-columns:1fr !important;gap:32px !important;}
+    [data-illo-icons]{grid-template-columns:1fr 1fr !important;}
+    [data-pcgifs]{grid-template-columns:1fr 1fr !important;}
+    [data-illo-grid] > div:last-child{margin-left:0 !important;margin-top:0 !important;}
     [data-img2]{grid-template-columns:1fr !important;gap:16px !important;}
     [data-imgtext]{grid-template-columns:1fr !important;gap:28px !important;}
     [data-textimg]{grid-template-columns:1fr !important;gap:28px !important;}
@@ -75,27 +78,43 @@
     [data-more-grid]{grid-template-columns:1fr !important;gap:0 !important;}
     [data-hero-grid]{grid-template-columns:1fr !important;gap:28px !important;align-items:start !important;}
     [data-hero-meta]{flex-direction:column !important;align-items:flex-start !important;gap:14px !important;}
+    [data-cs-row]{flex-direction:column !important;height:auto !important;align-items:stretch !important;gap:22px !important;}
+    [data-cs-text]{height:auto !important;padding:0 !important;justify-content:flex-start !important;order:1 !important;}
+    [data-cs-scroll]{display:none !important;}
+    [data-cs-scrollcol]{display:none !important;}
+    [data-cs-mob]{display:block !important;order:2 !important;width:100% !important;max-width:330px !important;height:74vh !important;margin:0 auto !important;}
+    [data-cs-gifs]{order:3 !important;width:100% !important;height:auto !important;flex-direction:row !important;gap:14px !important;}
+    [data-cs-gifs] > div{flex:1 !important;aspect-ratio:1/1 !important;}
   }
+  [data-navlink] [data-navarrow]{display:inline-flex;align-items:center;width:0;opacity:0;margin-right:0;overflow:hidden;transition:width .42s cubic-bezier(.22,1,.36,1),opacity .35s ease,margin-right .42s cubic-bezier(.22,1,.36,1);}
+  [data-navlink]:hover [data-navarrow]{width:1.22em;opacity:1;margin-right:.26em;}
+  [data-navlink],[data-menu-email]{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+  [data-menu-open="1"] [data-navlink],[data-menu-open="1"] [data-menu-email]{opacity:1;transform:translateY(0);}
+  [data-menu-open="1"] [data-navlink]:nth-of-type(1){transition-delay:.14s;}
+  [data-menu-open="1"] [data-navlink]:nth-of-type(2){transition-delay:.22s;}
+  [data-menu-open="1"] [data-menu-email]{transition-delay:.30s;}
 </style>
 </helmet>
 <div ref="{{ rootRef }}" style="position:relative;width:100%;">
 
   <a href="Studio Home.dc.html" data-wordmark style="position:fixed;top:22px;left:clamp(18px,4vw,44px);z-index:901;font-family:'Thunder',sans-serif;font-size:34px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1;color:#ffffff;mix-blend-mode:difference;">PORTFOLIO</a>
-  <nav data-nav style="position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:flex-end;padding:22px clamp(18px,4vw,44px);">
-    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="border:none;cursor:pointer;background:#1c201d;border-radius:11px;width:60px;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;">
+  <div style="{{ backdropStyle }}" onClick="{{ closeMenu }}"></div>
+  <div style="{{ morphWrapStyle }}" data-menu-open="{{ menuOpenStr }}">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:absolute;top:5px;right:14px;width:32px;height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:none;border:none;cursor:pointer;z-index:3;padding:0;">
       <span style="{{ barTop }}"></span>
       <span style="{{ barMid }}"></span>
     </button>
-  </nav>
-
-  <div style="{{ menuStyle }}">
-    <div style="display:flex;flex-direction:column;gap:clamp(6px,1.4vh,16px);">
-      <a href="Studio Home.dc.html" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Home</a>
-      <a href="Studio Home.dc.html#work" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Work</a>
-      <a href="Studio Home.dc.html#about" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">About</a>
-      <a href="mailto:asylum.tal@gmail.com" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Contact</a>
+    <div style="{{ menuContentStyle }}">
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <a data-navlink href="Studio Home.dc.html#work" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+          <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>Work
+        </a>
+        <a data-navlink href="Studio Home.dc.html#about" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+          <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>About
+        </a>
+      </div>
+      <a href="mailto:asylum.tal@gmail.com" data-menu-email onClick="{{ closeMenu }}" style="display:inline-block;margin-top:clamp(26px,4vw,42px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(16px,4vw,23px);letter-spacing:-.01em;color:#F5F0E4;">asylum.tal@gmail.com</a>
     </div>
-    <div style="margin-top:clamp(30px,6vh,64px);font-size:13px;letter-spacing:.18em;color:#1c201d;">ASYLUM.TAL@GMAIL.COM</div>
   </div>
 
   <header style="padding:clamp(120px,18vh,200px) clamp(16px,3vw,52px) clamp(40px,6vh,70px);max-width:1860px;margin:0 auto;">
@@ -139,16 +158,16 @@
 
       <div data-reveal>
         <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:clamp(12px,2vh,18px);"><span style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(24px,2.6vw,40px);letter-spacing:-.01em;color:#1c201d;">Internet Brands</span><span style="font-size:12px;font-weight:600;letter-spacing:.14em;color:#7c837c;">DESKTOP + MOBILE · SCROLL</span></div>
-        <div style="display:flex;gap:clamp(12px,1.4vw,20px);height:clamp(460px,64vh,760px);">
-          <div style="flex:1;min-width:0;max-width:600px;position:relative;border-radius:14px;overflow:hidden;background:#fff;">
+        <div data-cs-row style="display:flex;gap:clamp(12px,1.4vw,20px);height:clamp(460px,64vh,760px);">
+          <div data-cs-scroll style="flex:1;min-width:0;max-width:600px;position:relative;border-radius:14px;overflow:hidden;background:#fff;">
             <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ib-desktop.png" alt="" style="width:100%;height:auto;display:block;"></div>
             <div class="pg-bar" style="position:absolute;top:10px;right:10px;bottom:10px;width:8px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
           </div>
-          <div style="width:clamp(112px,12vw,168px);flex-shrink:0;position:relative;border-radius:16px;overflow:hidden;background:#fff;">
+          <div data-cs-mob style="width:clamp(112px,12vw,168px);flex-shrink:0;position:relative;border-radius:16px;overflow:hidden;background:#fff;">
             <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ib-mob.png" alt="" style="width:100%;height:auto;display:block;"></div>
             <div class="pg-bar" style="position:absolute;top:10px;right:7px;bottom:10px;width:6px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
           </div>
-          <div style="flex:1;min-width:150px;display:flex;align-items:center;justify-content:center;padding:0 clamp(6px,1vw,18px);">
+          <div data-cs-text style="flex:1;min-width:150px;display:flex;align-items:center;justify-content:center;padding:0 clamp(6px,1vw,18px);">
             <div style="max-width:42ch;">
               <div style="margin:0 0 clamp(14px,2vh,24px);font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(30px,3.4vw,58px);line-height:1.02;letter-spacing:-.02em;color:#1c201d;">The Challenge</div>
               <p data-words style="margin:0;font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(19px,2vw,34px);line-height:1.24;letter-spacing:-.01em;color:#1c201d;text-align:left;">
@@ -156,7 +175,7 @@
               </p>
             </div>
           </div>
-          <div style="width:clamp(150px,17vw,230px);flex-shrink:0;display:flex;flex-direction:column;gap:clamp(10px,1.4vh,18px);">
+          <div data-cs-gifs style="width:clamp(150px,17vw,230px);flex-shrink:0;display:flex;flex-direction:column;gap:clamp(10px,1.4vh,18px);">
             <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-eyes.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:9%;box-sizing:border-box;display:block;"></div>
             <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-phone.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:6%;box-sizing:border-box;display:block;"></div>
           </div>
@@ -164,8 +183,8 @@
       </div>
 
       <div data-reveal>
-        <div style="display:flex;gap:clamp(12px,1.4vw,20px);align-items:flex-end;">
-          <div style="flex:1;min-width:150px;display:flex;align-items:center;padding:0 clamp(6px,1vw,18px);height:clamp(460px,64vh,760px);">
+        <div data-cs-row style="display:flex;gap:clamp(12px,1.4vw,20px);align-items:flex-end;">
+          <div data-cs-text style="flex:1;min-width:150px;display:flex;align-items:center;padding:0 clamp(6px,1vw,18px);height:clamp(460px,64vh,760px);">
             <div>
               <div style="margin:0 0 clamp(14px,2vh,24px);font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(30px,3.4vw,58px);line-height:1.02;letter-spacing:-.02em;color:#1c201d;">The Solution</div>
               <p data-words style="margin:0;font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(19px,2vw,34px);line-height:1.24;letter-spacing:-.01em;color:#1c201d;">
@@ -173,18 +192,18 @@
               </p>
             </div>
           </div>
-          <div style="flex:1;min-width:0;max-width:600px;display:flex;flex-direction:column;">
+          <div data-cs-scrollcol style="flex:1;min-width:0;max-width:600px;display:flex;flex-direction:column;">
             <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:clamp(12px,2vh,18px);"><span style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(24px,2.6vw,40px);letter-spacing:-.01em;color:#1c201d;">Ranker</span><span style="font-size:12px;font-weight:600;letter-spacing:.14em;color:#7c837c;">DESKTOP + MOBILE · SCROLL</span></div>
             <div style="height:clamp(460px,64vh,760px);position:relative;border-radius:14px;overflow:hidden;background:#fff;">
               <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ranker-desktop.png" alt="" style="width:100%;height:auto;display:block;"></div>
               <div class="pg-bar" style="position:absolute;top:10px;right:10px;bottom:10px;width:8px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
             </div>
           </div>
-          <div style="width:clamp(112px,12vw,168px);flex-shrink:0;height:clamp(460px,64vh,760px);position:relative;border-radius:16px;overflow:hidden;background:#fff;">
+          <div data-cs-mob style="width:clamp(112px,12vw,168px);flex-shrink:0;height:clamp(460px,64vh,760px);position:relative;border-radius:16px;overflow:hidden;background:#fff;">
             <div class="pg-scroll" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;"><img src="assets/primis-ranker-mob.png" alt="" style="width:100%;height:auto;display:block;"></div>
             <div class="pg-bar" style="position:absolute;top:10px;right:7px;bottom:10px;width:6px;border-radius:999px;background:transparent;pointer-events:none;"><div class="pg-bar-fill" style="position:absolute;top:0;left:0;width:100%;height:30%;border-radius:999px;background:#1c201d;transition:top .08s linear,height .08s linear;"></div></div>
           </div>
-          <div style="width:clamp(150px,17vw,230px);flex-shrink:0;height:clamp(460px,64vh,760px);display:flex;flex-direction:column;gap:clamp(10px,1.4vh,18px);">
+          <div data-cs-gifs style="width:clamp(150px,17vw,230px);flex-shrink:0;height:clamp(460px,64vh,760px);display:flex;flex-direction:column;gap:clamp(10px,1.4vh,18px);">
             <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-boards.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:9%;box-sizing:border-box;display:block;"></div>
             <div style="flex:1;border-radius:14px;overflow:hidden;background:#fff;"><img src="assets/primis-projector.gif" alt="" style="width:100%;height:100%;object-fit:contain;padding:9%;box-sizing:border-box;display:block;"></div>
           </div>
@@ -199,18 +218,18 @@
   <section style="padding:clamp(30px,5vh,72px) clamp(16px,3vw,52px);max-width:1860px;margin:0 auto;">
     <div style="width:min(100%,1080px);margin:0 auto;">
       <div data-illo-grid style="display:grid;grid-template-columns:clamp(240px,30vw,380px) 1fr;gap:clamp(44px,6vw,110px);align-items:start;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.4vw,20px);">
+        <div data-illo-icons style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.4vw,20px);">
           <sc-for list="{{ icons }}" as="ic" hint-placeholder-count="4">
             <div data-reveal style="position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:#ffffff;display:flex;align-items:center;justify-content:center;padding:clamp(20px,3vw,40px);box-sizing:border-box;">{{ ic.el }}</div>
           </sc-for>
         </div>
-        <div style="margin-left:clamp(-40px,-2.4vw,-8px);margin-top:clamp(34px,6vh,80px);">
+        <div style="align-self:center;">
           <p data-words style="margin:0;font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(26px,3vw,52px);line-height:1.16;letter-spacing:-.015em;color:#1c201d;">
             <sc-for list="{{ approachWords }}" as="w" hint-placeholder-count="16"><span class="amask"><span class="aword">{{ w }}</span></span> </sc-for>
           </p>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,20px);margin-top:clamp(20px,3.4vh,46px);">
+      <div data-pcgifs style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.4vw,20px);margin-top:clamp(20px,3.4vh,46px);">
         <sc-for list="{{ pcGifs }}" as="g" hint-placeholder-count="4">
           <div data-reveal style="position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:#ffffff;">{{ g.el }}</div>
         </sc-for>
@@ -234,11 +253,7 @@
       <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">
         <div style="width:26px;height:26px;border:2px solid #1c201d;transform:rotate(45deg);position:relative;"><div style="position:absolute;inset:5px;border:2px solid #1c201d;border-radius:50%;"></div></div>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:11px;font-size:13px;font-weight:600;letter-spacing:.14em;">
-        <a href="#" style="color:#1c201d;">INSTAGRAM</a>
-        <a href="#" style="color:#1c201d;">LINKEDIN</a>
-        <a href="#" style="color:#1c201d;">VIMEO</a>
-      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:11px;font-size:13px;font-weight:600;letter-spacing:.14em;"></div>
     </div>
     <div style="font-family:'Thunder',sans-serif;font-size:clamp(120px,34vw,560px);font-weight:800;letter-spacing:.005em;text-transform:uppercase;line-height:.82;color:#1c201d;margin-top:clamp(30px,6vh,70px);margin-bottom:-.08em;text-align:center;">PORTFOLIO</div>
     <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;padding:22px 0;max-width:1860px;margin:0 auto;font-size:12px;font-weight:600;letter-spacing:.1em;color:#1c201d;">
@@ -305,7 +320,7 @@ class Component extends DCLogic {
       heroImgContain: true,
       subtitle: 'Primis needed a case-study format that felt custom for every client — built inside HubSpot, where speed comes easy but visual freedom does not.',
       overview: 'HubSpot gets a page live fast, but its templates fight you the moment you want them to look like more than a form. We designed a modular case-study system that works within those limits and still reads like a bespoke page — hero, client band, pull-quote, challenge, solution and animated results, all reusable blocks a marketer can fill in without touching the design.',
-      approach: 'Each case study gets its own world — a unique illustration and its own family of animated gifs, drawn fresh for every client so no two pages ever feel the same.',
+      approach: 'Each client gets a custom illustration set and its own animated icons, so every case study feels bespoke rather than templated.',
       quote: 'A template that looks bespoke every time — inside HubSpot’s limits',
       midText: 'Internet Brands ran in pink, Ranker in blue — one build, two brands, and a results section that lets the numbers do the talking.',
       meta: [ { label: 'ROLE', value: 'Design, Art Direction, Build' }, { label: 'SERVICES', value: 'HubSpot Templating, Web Design, Illustration' }, { label: 'DELIVERABLES', value: 'Reusable case-study template' }, { label: 'TIMELINE', value: '2025' } ],
@@ -423,6 +438,14 @@ class Component extends DCLogic {
   ];
 
   componentDidMount() {
+    if (!window.__smoothScroll && !('ontouchstart' in window) && window.matchMedia && window.matchMedia('(min-width:900px)').matches) {
+      window.__smoothScroll = true;
+      let __t = window.scrollY || 0, __c = __t, __run = false;
+      const __ease = 0.055;
+      const __max = () => (document.documentElement.scrollHeight - window.innerHeight);
+      const __step = () => { __c += (__t - __c) * __ease; if (Math.abs(__t - __c) < 0.4) { __c = __t; window.scrollTo(0, __c); __run = false; return; } window.scrollTo(0, __c); requestAnimationFrame(__step); };
+      window.addEventListener('wheel', (e) => { if (e.ctrlKey) return; e.preventDefault(); if (!__run) { __c = window.scrollY; __t = __c; } __t = Math.max(0, Math.min(__max(), __t + e.deltaY * 0.8)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+    }
     const heroVid = document.querySelector('video[data-hero-video]');
     if (heroVid) { heroVid.play && heroVid.play().catch(() => {}); }
     this._running = true;
@@ -644,17 +667,31 @@ class Component extends DCLogic {
       credits,
       toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
-      barTop: { display: 'block', width: '22px', height: '2px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(3.5px) rotate(45deg)' : 'none' },
-      barMid: { display: 'block', width: '22px', height: '2px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(-3.5px) rotate(-45deg)' : 'none' },
+      menuOpenStr: open ? '1' : '0',
+      morphWrapStyle: { position:'fixed', top:'14px', right:'16px', zIndex:970, background:'#141414', borderRadius: open?'26px':'12px', width: open?'min(540px, calc(100vw - 32px))':'60px', height: open?'clamp(360px,60vh,470px)':'42px', overflow:'hidden', boxShadow: open?'0 30px 80px -28px rgba(0,0,0,.55)':'0 6px 18px -8px rgba(0,0,0,.35)', transition:'width .55s cubic-bezier(.22,1,.36,1), height .55s cubic-bezier(.22,1,.36,1), border-radius .5s ease, box-shadow .5s ease' },
+      menuContentStyle: { position:'absolute', inset:0, boxSizing:'border-box', padding:'clamp(28px,4.2vw,48px)', paddingTop:'clamp(64px,10vw,86px)', display:'flex', flexDirection:'column', color:'#F5F0E4', opacity: open?1:0, pointerEvents: open?'auto':'none', transition:'opacity .4s ease' },
+      backdropStyle: { position:'fixed', inset:0, zIndex:960, background: open?'rgba(18,20,18,0.28)':'rgba(18,20,18,0)', opacity: open?1:0, pointerEvents: open?'auto':'none', transition:'opacity .4s ease, background .4s ease' },
+      barTop: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(4.5px) rotate(45deg)' : 'none' },
+      barMid: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(-4.5px) rotate(-45deg)' : 'none' },
+      stopProp: (e) => { e.stopPropagation(); },
       menuStyle: {
-        position: 'fixed', inset: 0, zIndex: 880,
-        background: '#F5F0E4',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        padding: '0 clamp(16px,3vw,52px)',
+        position: 'fixed', inset: 0, zIndex: 950,
+        background: open ? 'rgba(18,20,18,0.30)' : 'rgba(18,20,18,0)',
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end',
+        padding: '12px',
         opacity: open ? 1 : 0,
         pointerEvents: open ? 'auto' : 'none',
-        transform: open ? 'none' : 'translateY(-2%)',
-        transition: 'opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1)',
+        transition: 'opacity .4s ease, background .4s ease',
+      },
+      menuPanelStyle: {
+        position: 'relative', width: 'min(560px, 100%)',
+        background: '#0e100e', borderRadius: '26px',
+        padding: 'clamp(30px,4.5vw,54px)', color: '#F5F0E4',
+        boxShadow: '0 30px 80px -28px rgba(0,0,0,.6)',
+        transformOrigin: 'top right',
+        transform: open ? 'scale(1)' : 'scale(0.13)',
+        opacity: open ? 1 : 0,
+        transition: 'transform .55s cubic-bezier(.22,1,.36,1), opacity .4s ease',
       },
     };
   }

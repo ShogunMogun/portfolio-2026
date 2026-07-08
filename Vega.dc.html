@@ -62,38 +62,49 @@
   @media (max-width:760px){
     [data-overview-grid]{grid-template-columns:1fr !important;gap:38px !important;}
     [data-approach-grid]{grid-template-columns:1fr !important;gap:40px !important;}
-    [data-offset-grid]{grid-template-columns:1fr !important;gap:32px !important;}
-    [data-twoup]{grid-template-columns:1fr !important;gap:36px !important;}
-    [data-img2]{grid-template-columns:1fr !important;gap:16px !important;}
-    [data-imgtext]{grid-template-columns:1fr !important;gap:28px !important;}
-    [data-textimg]{grid-template-columns:1fr !important;gap:28px !important;}
+    [data-offset-grid]{grid-template-columns:1fr !important;gap:14px !important;}
+    [data-twoup]{grid-template-columns:1fr !important;gap:14px !important;}
+    [data-img2]{grid-template-columns:1fr !important;gap:14px !important;}
+    [data-imgtext]{grid-template-columns:1fr !important;gap:14px !important;}
+    [data-textimg]{grid-template-columns:1fr !important;gap:14px !important;}
     [data-textimg] > div:last-child{order:-1 !important;}
     [data-icons]{grid-template-columns:repeat(3,1fr) !important;gap:22px !important;}
-    [data-spreads]{grid-template-columns:1fr !important;gap:24px !important;}
+    [data-spreads]{grid-template-columns:1fr !important;gap:14px !important;}
     [data-more-grid]{grid-template-columns:1fr !important;gap:0 !important;}
     [data-hero-grid]{grid-template-columns:1fr !important;gap:28px !important;align-items:start !important;}
     [data-hero-meta]{flex-direction:column !important;align-items:flex-start !important;gap:14px !important;}
+    section{padding-top:34px !important;padding-bottom:34px !important;}
+    section:has(> [data-more-grid]){margin-top:44px !important;padding-top:0 !important;padding-bottom:0 !important;}
   }
+  [data-navlink] [data-navarrow]{display:inline-flex;align-items:center;width:0;opacity:0;margin-right:0;overflow:hidden;transition:width .42s cubic-bezier(.22,1,.36,1),opacity .35s ease,margin-right .42s cubic-bezier(.22,1,.36,1);}
+  [data-navlink]:hover [data-navarrow]{width:1.22em;opacity:1;margin-right:.26em;}
+  [data-navlink],[data-menu-email]{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+  [data-menu-open="1"] [data-navlink],[data-menu-open="1"] [data-menu-email]{opacity:1;transform:translateY(0);}
+  [data-menu-open="1"] [data-navlink]:nth-of-type(1){transition-delay:.14s;}
+  [data-menu-open="1"] [data-navlink]:nth-of-type(2){transition-delay:.22s;}
+  [data-menu-open="1"] [data-menu-email]{transition-delay:.30s;}
 </style>
 </helmet>
 <div ref="{{ rootRef }}" style="position:relative;width:100%;">
 
   <a href="Studio Home.dc.html" data-wordmark style="position:fixed;top:22px;left:clamp(18px,4vw,44px);z-index:901;font-family:'Thunder',sans-serif;font-size:34px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1;color:#ffffff;mix-blend-mode:difference;">PORTFOLIO</a>
-  <nav data-nav style="position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:flex-end;padding:22px clamp(18px,4vw,44px);">
-    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="border:none;cursor:pointer;background:#1c201d;border-radius:11px;width:60px;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;">
+  <div style="{{ backdropStyle }}" onClick="{{ closeMenu }}"></div>
+  <div style="{{ morphWrapStyle }}" data-menu-open="{{ menuOpenStr }}">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:absolute;top:5px;right:14px;width:32px;height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:none;border:none;cursor:pointer;z-index:3;padding:0;">
       <span style="{{ barTop }}"></span>
       <span style="{{ barMid }}"></span>
     </button>
-  </nav>
-
-  <div style="{{ menuStyle }}">
-    <div style="display:flex;flex-direction:column;gap:clamp(6px,1.4vh,16px);">
-      <a href="Studio Home.dc.html" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Home</a>
-      <a href="Studio Home.dc.html#work" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Work</a>
-      <a href="Studio Home.dc.html#about" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">About</a>
-      <a href="mailto:asylum.tal@gmail.com" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Contact</a>
+    <div style="{{ menuContentStyle }}">
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <a data-navlink href="Studio Home.dc.html#work" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+          <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>Work
+        </a>
+        <a data-navlink href="Studio Home.dc.html#about" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+          <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>About
+        </a>
+      </div>
+      <a href="mailto:asylum.tal@gmail.com" data-menu-email onClick="{{ closeMenu }}" style="display:inline-block;margin-top:clamp(26px,4vw,42px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(16px,4vw,23px);letter-spacing:-.01em;color:#F5F0E4;">asylum.tal@gmail.com</a>
     </div>
-    <div style="margin-top:clamp(30px,6vh,64px);font-size:13px;letter-spacing:.18em;color:#1c201d;">ASYLUM.TAL@GMAIL.COM</div>
   </div>
 
   <header style="padding:clamp(120px,18vh,200px) clamp(16px,3vw,52px) clamp(40px,6vh,70px);max-width:1860px;margin:0 auto;">
@@ -469,6 +480,14 @@ class Component extends DCLogic {
   ];
 
   componentDidMount() {
+    if (!window.__smoothScroll && !('ontouchstart' in window) && window.matchMedia && window.matchMedia('(min-width:900px)').matches) {
+      window.__smoothScroll = true;
+      let __t = window.scrollY || 0, __c = __t, __run = false;
+      const __ease = 0.055;
+      const __max = () => (document.documentElement.scrollHeight - window.innerHeight);
+      const __step = () => { __c += (__t - __c) * __ease; if (Math.abs(__t - __c) < 0.4) { __c = __t; window.scrollTo(0, __c); __run = false; return; } window.scrollTo(0, __c); requestAnimationFrame(__step); };
+      window.addEventListener('wheel', (e) => { if (e.ctrlKey) return; e.preventDefault(); if (!__run) { __c = window.scrollY; __t = __c; } __t = Math.max(0, Math.min(__max(), __t + e.deltaY * 0.8)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+    }
     const heroVid = document.querySelector('video[data-hero-video]');
     if (heroVid) { heroVid.play && heroVid.play().catch(() => {}); }
     this._running = true;
@@ -705,17 +724,31 @@ class Component extends DCLogic {
       credits,
       toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
-      barTop: { display: 'block', width: '22px', height: '2px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(3.5px) rotate(45deg)' : 'none' },
-      barMid: { display: 'block', width: '22px', height: '2px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(-3.5px) rotate(-45deg)' : 'none' },
+      menuOpenStr: open ? '1' : '0',
+      morphWrapStyle: { position:'fixed', top:'14px', right:'16px', zIndex:970, background:'#141414', borderRadius: open?'26px':'12px', width: open?'min(540px, calc(100vw - 32px))':'60px', height: open?'clamp(360px,60vh,470px)':'42px', overflow:'hidden', boxShadow: open?'0 30px 80px -28px rgba(0,0,0,.55)':'0 6px 18px -8px rgba(0,0,0,.35)', transition:'width .55s cubic-bezier(.22,1,.36,1), height .55s cubic-bezier(.22,1,.36,1), border-radius .5s ease, box-shadow .5s ease' },
+      menuContentStyle: { position:'absolute', inset:0, boxSizing:'border-box', padding:'clamp(28px,4.2vw,48px)', paddingTop:'clamp(64px,10vw,86px)', display:'flex', flexDirection:'column', color:'#F5F0E4', opacity: open?1:0, pointerEvents: open?'auto':'none', transition:'opacity .4s ease' },
+      backdropStyle: { position:'fixed', inset:0, zIndex:960, background: open?'rgba(18,20,18,0.28)':'rgba(18,20,18,0)', opacity: open?1:0, pointerEvents: open?'auto':'none', transition:'opacity .4s ease, background .4s ease' },
+      barTop: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(4.5px) rotate(45deg)' : 'none' },
+      barMid: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(-4.5px) rotate(-45deg)' : 'none' },
+      stopProp: (e) => { e.stopPropagation(); },
       menuStyle: {
-        position: 'fixed', inset: 0, zIndex: 880,
-        background: '#F5F0E4',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        padding: '0 clamp(16px,3vw,52px)',
+        position: 'fixed', inset: 0, zIndex: 950,
+        background: open ? 'rgba(18,20,18,0.30)' : 'rgba(18,20,18,0)',
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end',
+        padding: '12px',
         opacity: open ? 1 : 0,
         pointerEvents: open ? 'auto' : 'none',
-        transform: open ? 'none' : 'translateY(-2%)',
-        transition: 'opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1)',
+        transition: 'opacity .4s ease, background .4s ease',
+      },
+      menuPanelStyle: {
+        position: 'relative', width: 'min(560px, 100%)',
+        background: '#0e100e', borderRadius: '26px',
+        padding: 'clamp(30px,4.5vw,54px)', color: '#F5F0E4',
+        boxShadow: '0 30px 80px -28px rgba(0,0,0,.6)',
+        transformOrigin: 'top right',
+        transform: open ? 'scale(1)' : 'scale(0.13)',
+        opacity: open ? 1 : 0,
+        transition: 'transform .55s cubic-bezier(.22,1,.36,1), opacity .4s ease',
       },
     };
   }

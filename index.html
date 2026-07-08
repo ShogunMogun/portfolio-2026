@@ -19,6 +19,10 @@
   @font-face{font-family:'Thunder';src:url('fonts/Thunder-Black.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap;}
   @font-face{font-family:'Thunder';src:url('fonts/Thunder-SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
   @font-face{font-family:'Thunder';src:url('fonts/Thunder-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Chillax';src:url('fonts/Chillax-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Creme Espana';src:url('fonts/CremeEspana.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Dirtyline';src:url('fonts/Dirtyline.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'Calfine';src:url('fonts/Calfine.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap;}
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{font-family:'Archivo',sans-serif;background:#F5F0E4;color:#1c201d;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
@@ -40,19 +44,27 @@
   .aword{display:inline-block;transform:translateY(115%);}
   .amotif{opacity:0;transform:translateY(24px);}
   @media (max-width:760px){
-    [data-work-section]{padding:70px 22px 80px !important;}
+    [data-work-section]{padding:64px 22px 84px !important;}
     [data-work-grid]{grid-template-columns:1fr !important;gap:0 !important;}
     [data-names-col]{grid-column:1 !important;grid-row:1 !important;}
-    [data-card-col]{grid-column:1 !important;grid-row:1 !important;justify-self:end !important;align-self:stretch !important;width:60% !important;}
-    [data-sticky-card]{border-radius:11px !important;aspect-ratio:16/9 !important;}
-    [data-work="row"]{min-height:16vh !important;}
-    [data-work="row"] h3{font-size:16vw !important;}
-    [data-work="row"] [data-arrow] svg{width:44px !important;}
+    [data-card-col]{grid-column:1 !important;grid-row:1 !important;justify-self:end !important;align-self:stretch !important;width:58% !important;}
+    [data-sticky-card]{border-radius:7px !important;aspect-ratio:16/9 !important;}
+    [data-sticky-wrap]{top:26vh !important;}
+    [data-work="row"]{min-height:0 !important;padding:40px 0 !important;}
+    [data-work="row"] h3{font-size:clamp(40px,13vw,86px) !important;white-space:normal !important;overflow-wrap:break-word !important;line-height:.9 !important;}
+    [data-work="row"] [data-arrow] svg{width:38px !important;}
   }
   @keyframes ringSpin{to{transform:rotate(360deg)}}
   @keyframes orbit{from{transform:rotate(0deg) translateX(var(--orb,26px)) rotate(0deg)}to{transform:rotate(360deg) translateX(var(--orb,26px)) rotate(-360deg)}}
   @keyframes blobMorph{0%,100%{border-radius:42% 58% 63% 37% / 41% 44% 56% 59%}50%{border-radius:62% 38% 35% 65% / 59% 36% 64% 41%}}
   @keyframes barDance{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+  [data-navlink] [data-navarrow]{display:inline-flex;align-items:center;width:0;opacity:0;margin-right:0;overflow:hidden;transition:width .42s cubic-bezier(.22,1,.36,1),opacity .35s ease,margin-right .42s cubic-bezier(.22,1,.36,1);}
+  [data-navlink]:hover [data-navarrow]{width:1.22em;opacity:1;margin-right:.26em;}
+  [data-navlink],[data-menu-email]{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+  [data-menu-open="1"] [data-navlink],[data-menu-open="1"] [data-menu-email]{opacity:1;transform:translateY(0);}
+  [data-menu-open="1"] [data-navlink]:nth-of-type(1){transition-delay:.14s;}
+  [data-menu-open="1"] [data-navlink]:nth-of-type(2){transition-delay:.22s;}
+  [data-menu-open="1"] [data-menu-email]{transition-delay:.30s;}
 </style>
 </helmet>
 <div ref="{{ rootRef }}" style="position:relative;width:100%;">
@@ -60,25 +72,28 @@
   <div style="{{ introStyle }}" aria-hidden="true">
     <div style="display:inline-block;text-align:center;">
       <div data-introline1 style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(15px,2.9vw,38px);font-weight:700;letter-spacing:.01em;word-spacing:.14em;text-align:center;line-height:1;margin-bottom:.5em;color:#1c201d;">Hi! this is my</div>
-      <div data-introword style="font-family:'Thunder',sans-serif;font-size:clamp(72px,16vw,210px);font-weight:800;letter-spacing:.01em;text-transform:uppercase;color:#1c201d;line-height:.9;">Portfolio</div>
+      <div data-introword style="font-family:'Thunder',sans-serif;font-size:clamp(30px,8vw,140px);font-weight:800;letter-spacing:.01em;text-transform:uppercase;color:#1c201d;line-height:.9;max-width:100%;">Portfolio</div>
     </div>
   </div>
 
   <a href="#top" data-wordmark style="position:fixed;top:22px;left:clamp(18px,4vw,44px);z-index:901;font-family:'Thunder',sans-serif;font-size:34px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1;color:#ffffff;mix-blend-mode:difference;">PORTFOLIO</a>
-  <nav style="position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:flex-end;padding:22px clamp(18px,4vw,44px);">
-    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="border:none;cursor:pointer;background:#1c201d;border-radius:11px;width:60px;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;">
+  <div style="{{ backdropStyle }}" onClick="{{ closeMenu }}"></div>
+  <div style="{{ morphWrapStyle }}" data-menu-open="{{ menuOpenStr }}">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:absolute;top:5px;right:14px;width:32px;height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:none;border:none;cursor:pointer;z-index:3;padding:0;">
       <span style="{{ barTop }}"></span>
       <span style="{{ barMid }}"></span>
     </button>
-  </nav>
-
-  <div style="{{ menuStyle }}">
-    <div style="display:flex;flex-direction:column;gap:clamp(6px,1.4vh,16px);">
-      <a href="#work" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Work</a>
-      <a href="#about" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">About</a>
-      <a href="mailto:asylum.tal@gmail.com" onClick="{{ closeMenu }}" style="font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(48px,9vw,120px);letter-spacing:-.02em;line-height:1;color:#1c201d;">Contact</a>
+    <div style="{{ menuContentStyle }}">
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <a data-navlink href="#work" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+          <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>Work
+        </a>
+        <a data-navlink href="#about" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+          <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>About
+        </a>
+      </div>
+      <a href="mailto:asylum.tal@gmail.com" data-menu-email onClick="{{ closeMenu }}" style="display:inline-block;margin-top:clamp(26px,4vw,42px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(16px,4vw,23px);letter-spacing:-.01em;color:#F5F0E4;">asylum.tal@gmail.com</a>
     </div>
-    <div style="margin-top:clamp(30px,6vh,64px);font-size:13px;letter-spacing:.18em;color:#7c837c;">ASYLUM.TAL@GMAIL.COM</div>
   </div>
 
   <header id="top" style="position:sticky;top:0;height:100vh;min-height:640px;width:100%;display:flex;flex-direction:column;overflow:hidden;z-index:1;">
@@ -93,8 +108,7 @@
 
   <div style="position:relative;z-index:2;background:#F5F0E4;">
 
-  <section style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:clamp(36px,6vh,96px) clamp(18px,5vw,90px) clamp(120px,22vh,260px);">
-    <div style="font-family:'Archivo',sans-serif;font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#9aa39c;margin-bottom:clamp(18px,3vh,34px);">( About me )</div>
+  <section id="about" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:clamp(36px,6vh,96px) clamp(18px,5vw,90px) clamp(120px,22vh,260px);">
     <div data-about style="font-family:'Nyght Serif',serif;font-weight:300;font-size:clamp(30px,4.5vw,78px);line-height:1.04;letter-spacing:-.02em;color:#1c201d;max-width:19ch;">
       <span class="amask"><span class="aword">Senior</span></span> <span class="amask"><span class="aword">Creative</span></span> <span class="amask"><span class="aword">Designer</span></span> <span class="amask"><span class="aword">specializing</span></span> <span class="amask"><span class="aword">in</span></span> <span class="amask"><span class="aword">branding,</span></span> <span class="amask"><span class="aword">motion,</span></span> <span class="amask"><span class="aword">web,</span></span> <span class="amask"><span class="aword">and</span></span> <span class="amask"><span class="aword">AI</span></span> <span class="amask"><span class="aword">creative</span></span> <span class="amask"><span class="aword">systems.</span></span>
       <span class="amotif" style="display:flex;align-items:center;justify-content:center;width:clamp(58px,5.4vw,100px);height:clamp(58px,5.4vw,100px);margin:clamp(20px,3.2vh,46px) 0;position:relative;">
@@ -116,7 +130,7 @@
     <div data-work-grid style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:clamp(20px,3vw,56px);align-items:stretch;">
       <div data-names-col style="position:relative;min-width:0;">
         <sc-for list="{{ works }}" as="item" hint-placeholder-count="10">
-          <div data-work="row" data-tag="{{ item.tag }}" data-video="{{ item.video }}" data-file="{{ item.file }}" data-gifs="{{ item.gifs }}" onMouseEnter="{{ item.onEnter }}" style="position:relative;min-height:clamp(178px,30vh,360px);display:flex;flex-direction:column;justify-content:center;">
+          <div data-work="row" data-tag="{{ item.tag }}" data-video="{{ item.video }}" data-file="{{ item.file }}" data-gifs="{{ item.gifs }}" onMouseEnter="{{ item.onEnter }}" style="position:relative;min-height:clamp(190px,33vh,400px);display:flex;flex-direction:column;justify-content:center;">
             <a href="{{ item.href }}" style="display:block;cursor:pointer;position:relative;">
               <div style="display:flex;align-items:center;gap:clamp(10px,1.6vw,26px);">
                 <span data-arrow style="flex-shrink:0;display:flex;align-items:center;"><svg viewBox="0 0 78 18" style="width:clamp(46px,4.6vw,92px);height:auto;display:block;overflow:visible;"><line x1="0" y1="9" x2="73" y2="9" stroke="#1c201d" stroke-width="1.3" stroke-linecap="round"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="#1c201d" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
@@ -131,8 +145,7 @@
         <div data-sticky-wrap style="position:sticky;top:38vh;height:0;">
          <div style="transform:translateY(-28%);">
           <div data-sticky-card style="position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;">
-            <iframe data-card-video src="about:blank" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" style="position:absolute;top:50%;left:50%;width:100%;height:133.4%;transform:translate(-50%,-50%) scale(1.03);border:0;opacity:0;transition:opacity .4s ease;pointer-events:none;" title="Project video"></iframe>
-            <iframe data-primis-video src="https://player.vimeo.com/video/1206862673?background=1&amp;autopause=0&amp;muted=1&amp;loop=1" allow="autoplay; fullscreen; picture-in-picture" frameborder="0" style="position:absolute;top:50%;left:50%;width:100%;height:133.4%;transform:translate(-50%,-50%) scale(1.03);border:0;opacity:0;transition:opacity .4s ease;pointer-events:none;" title="Primis case studies"></iframe>
+            <div data-vimeo-frames style="position:absolute;inset:0;pointer-events:none;"></div>
             <video data-card-video-file muted="{{ true }}" loop="{{ true }}" playsinline="{{ true }}" autoplay="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;pointer-events:none;"></video>
             <div data-card-gif-grid style="position:absolute;inset:0;background:#ffffff;opacity:0;transition:opacity .4s ease;pointer-events:none;">
               <img data-card-gif alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7%;box-sizing:border-box;opacity:1;transition:opacity .22s ease;">
@@ -157,16 +170,12 @@
     </div>
   </section>
 
-  <footer id="about" style="position:relative;padding:clamp(50px,8vh,90px) clamp(18px,5vw,90px) 0;overflow:hidden;">
+  <footer id="contact" style="position:relative;padding:clamp(50px,8vh,90px) clamp(18px,5vw,90px) 0;overflow:hidden;">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:30px;max-width:1480px;margin:0 auto;">
       <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">
         <div style="width:26px;height:26px;border:2px solid #1c201d;transform:rotate(45deg);position:relative;"><div style="position:absolute;inset:5px;border:2px solid #1c201d;border-radius:50%;"></div></div>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:11px;font-size:13px;font-weight:600;letter-spacing:.14em;">
-        <a href="#about" style="color:#1c201d;">INSTAGRAM</a>
-        <a href="#about" style="color:#1c201d;">LINKEDIN</a>
-        <a href="#about" style="color:#1c201d;">VIMEO</a>
-      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:11px;font-size:13px;font-weight:600;letter-spacing:.14em;"></div>
     </div>
     <div style="font-family:'Thunder',sans-serif;font-size:clamp(120px,34vw,560px);font-weight:800;letter-spacing:.005em;text-transform:uppercase;line-height:.82;color:#1c201d;margin-top:clamp(30px,6vh,70px);margin-bottom:-.08em;text-align:center;">PORTFOLIO</div>
     <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;padding:22px 0;max-width:1480px;margin:0 auto;font-size:12px;font-weight:600;letter-spacing:.1em;color:#7c837c;">
@@ -215,28 +224,28 @@ class Component extends DCLogic {
     if (intro) {
       // rapid font flicker on the intro wordmark
       const wFonts = [
-        { f: "'Archivo Black',sans-serif", s: 'normal' },
+        { f: "'Chillax',sans-serif", s: 'normal' },
         { f: "'DM Serif Display',serif", s: 'italic' },
-        { f: "'Space Mono',monospace", s: 'normal' },
+        { f: "'Creme Espana',serif", s: 'normal' },
         { f: "'Bodoni Moda',serif", s: 'italic' },
         { f: "'Playfair Display',serif", s: 'normal' },
         { f: "'Nyght Serif',serif", s: 'italic' },
         { f: "'Anton',sans-serif", s: 'normal' },
-        { f: "'Abril Fatface',serif", s: 'normal' },
+        { f: "'Calfine',serif", s: 'normal' },
         { f: "'Syne',sans-serif", s: 'normal' },
+        { f: "'Dirtyline',cursive", s: 'normal' },
         { f: "'Libre Caslon Display',serif", s: 'italic' },
         { f: "'Oswald',sans-serif", s: 'normal' },
-        { f: "'Thunder',sans-serif", s: 'normal' },
       ];
       let fi = 0;
       const lFonts = [
-        { f: "'Space Mono',monospace", s: 'italic' },
-        { f: "'Archivo Black',sans-serif", s: 'italic' },
+        { f: "'Chillax',sans-serif", s: 'italic' },
+        { f: "'Calfine',serif", s: 'normal' },
         { f: "'Nyght Serif',serif", s: 'italic' },
         { f: "'DM Serif Display',serif", s: 'normal' },
         { f: "'Bodoni Moda',serif", s: 'italic' },
-        { f: "'Archivo',sans-serif", s: 'italic' },
-        { f: "'Abril Fatface',serif", s: 'normal' },
+        { f: "'Creme Espana',serif", s: 'normal' },
+        { f: "'Dirtyline',cursive", s: 'normal' },
         { f: "'Syne',sans-serif", s: 'normal' },
         { f: "'Oswald',sans-serif", s: 'normal' },
         { f: "'Libre Caslon Display',serif", s: 'italic' },
@@ -267,7 +276,7 @@ class Component extends DCLogic {
         flickStopped = true;
         clearTimeout(flick);
         const w = document.querySelector('[data-introword]');
-        if (w) { w.style.fontFamily = "'Thunder',sans-serif"; w.style.fontStyle = 'normal'; }
+        if (w) { w.style.fontFamily = "'Nyght Serif',serif"; w.style.fontStyle = 'normal'; }
         const l1 = document.querySelector('[data-introline1]');
         if (l1) { l1.style.fontFamily = "'Playfair Display',serif"; l1.style.fontStyle = 'italic'; }
         this._timers.push(setTimeout(() => this.setState({ introDone: true }), 420));
@@ -319,7 +328,6 @@ class Component extends DCLogic {
     const preloadCardMedia = () => {
       const card = document.querySelector('[data-sticky-card]');
       if (!card) return;
-      const vidEl = card.querySelector('[data-card-video]');
       const fileEl = card.querySelector('[data-card-video-file]');
       if (fileEl && !fileEl.getAttribute('data-loaded')) {
         fileEl.preload = 'auto';
@@ -327,12 +335,49 @@ class Component extends DCLogic {
         fileEl.setAttribute('data-loaded', 'assets/vega.mp4');
         fileEl.load();
       }
-      if (vidEl && !vidEl.getAttribute('data-loaded')) {
-        vidEl.src = 'https://player.vimeo.com/video/1206440233?background=1&autopause=0&muted=1&loop=1';
-        vidEl.setAttribute('data-loaded', '1206440233');
+      // Build one dedicated, preloaded iframe per distinct Vimeo id so switching
+      // cards just crossfades between already-loaded players — never reloads a
+      // shared iframe (which caused the blank-white flash and stale previous frame).
+      const frames = card.querySelector('[data-vimeo-frames]');
+      if (frames && !frames.getAttribute('data-built')) {
+        const ids = ['1206440233', '1207005717', '1206862673'];
+        ids.forEach((id) => {
+          const f = document.createElement('iframe');
+          f.setAttribute('data-vid', id);
+          f.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+          f.setAttribute('frameborder', '0');
+          f.setAttribute('title', 'Project video');
+          f.src = 'https://player.vimeo.com/video/' + id + '?background=1&autopause=0&muted=1&loop=1';
+          f.style.cssText = 'position:absolute;top:50%;left:50%;width:100%;height:133.4%;transform:translate(-50%,-50%) scale(1.03);border:0;opacity:0;transition:opacity .4s ease;pointer-events:none;';
+          frames.appendChild(f);
+        });
+        frames.setAttribute('data-built', '1');
       }
     };
     preloadCardMedia();
+
+    // Smooth momentum scroll on desktop; mobile keeps native touch momentum
+    if (!('ontouchstart' in window) && window.matchMedia && window.matchMedia('(min-width:900px)').matches) {
+      let target = window.scrollY || 0, cur = target, running = false;
+      const ease = 0.055;
+      const maxY = () => (document.documentElement.scrollHeight - window.innerHeight);
+      const step = () => {
+        cur += (target - cur) * ease;
+        if (Math.abs(target - cur) < 0.4) { cur = target; window.scrollTo(0, cur); running = false; return; }
+        window.scrollTo(0, cur);
+        requestAnimationFrame(step);
+      };
+      const onWheel = (e) => {
+        if (e.ctrlKey) return;
+        if (this.state && !this.state.introGone) return;
+        e.preventDefault();
+        if (!running) { cur = window.scrollY; target = cur; }
+        target = Math.max(0, Math.min(maxY(), target + e.deltaY * 0.8));
+        if (!running) { running = true; requestAnimationFrame(step); }
+      };
+      window.addEventListener('wheel', onWheel, { passive: false });
+      this._onWheel = onWheel;
+    }
   }
 
   _maybeRevealAbout() {
@@ -386,29 +431,19 @@ class Component extends DCLogic {
     });
     const card = document.querySelector('[data-sticky-card]');
     if (!card) return;
-    const vidEl = card.querySelector('[data-card-video]');
-    const primisEl = card.querySelector('[data-primis-video]');
-    const PRIMIS_ID = '1206862673';
+    const frames = card.querySelector('[data-vimeo-frames]');
     const fileEl = card.querySelector('[data-card-video-file]');
     const gifEl = card.querySelector('[data-card-gif-grid]');
     const overlay = card.querySelector('[data-card-overlay]');
-    const showPrimis = (on) => { if (primisEl) primisEl.style.opacity = on ? '1' : '0'; };
+    const showVimeo = (id) => { if (!frames) return; frames.querySelectorAll('iframe').forEach((f) => { const on = !!id && f.getAttribute('data-vid') === id; if (f.style.opacity !== (on ? '1' : '0')) f.style.opacity = on ? '1' : '0'; }); };
     const stopGifs = () => { if (this._gifTimer) { clearTimeout(this._gifTimer); this._gifTimer = null; } this._gifActive = -1; };
     if (active >= 0) {
       const tilt = Component.TILTS[((active % 10) + 10) % 10];
       const vid = rows[active] ? (rows[active].getAttribute('data-video') || '') : '';
       const file = rows[active] ? (rows[active].getAttribute('data-file') || '') : '';
       const gifs = rows[active] ? (rows[active].getAttribute('data-gifs') || '') : '';
-      if (vid === PRIMIS_ID) {
-        stopGifs();
-        showPrimis(true);
-        if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
-        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
-        if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
-        if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
-        if (this._cardBg !== '#fff') { card.style.background = '#fff'; this._cardBg = '#fff'; }
-      } else if (gifs) {
-        showPrimis(false);
+      if (gifs) {
+        showVimeo(null);
         const list = gifs.split(',').map(s => s.trim()).filter(Boolean);
         if (this._gifActive !== active) {
           if (this._gifTimer) { clearTimeout(this._gifTimer); this._gifTimer = null; }
@@ -420,7 +455,6 @@ class Component extends DCLogic {
           const advance = () => {
             const src = list[idx % list.length];
             if (!img || !src) return;
-            // crossfade to hide the aspect-ratio size change
             img.style.opacity = '0';
             const swap = () => {
               img.src = src;
@@ -436,34 +470,28 @@ class Component extends DCLogic {
           advance();
         }
         if (gifEl && gifEl.style.opacity !== '1') gifEl.style.opacity = '1';
-        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
         if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
         if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
         if (this._cardBg !== '#F5F0E4') { card.style.background = '#F5F0E4'; this._cardBg = '#F5F0E4'; }
       } else if (file) {
-        stopGifs(); showPrimis(false);
+        stopGifs(); showVimeo(null);
         if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
         if (fileEl) {
           if (fileEl.getAttribute('data-loaded') !== file) { fileEl.src = file; fileEl.setAttribute('data-loaded', file); }
           if (fileEl.style.opacity !== '1') { fileEl.style.opacity = '1'; fileEl.play && fileEl.play().catch(() => {}); }
         }
-        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
         if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
         if (this._cardBg !== '#fff') { card.style.background = '#fff'; this._cardBg = '#fff'; }
       } else if (vid) {
-        stopGifs(); showPrimis(false);
+        stopGifs();
+        showVimeo(vid);
         if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
-        if (vidEl) {
-          if (vidEl.getAttribute('data-loaded') !== vid) { vidEl.src = 'https://player.vimeo.com/video/' + vid + '?background=1&autopause=0&muted=1&loop=1'; vidEl.setAttribute('data-loaded', vid); }
-          if (vidEl.style.opacity !== '1') vidEl.style.opacity = '1';
-        }
         if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
         if (overlay && overlay.style.opacity !== '0') overlay.style.opacity = '0';
         if (this._cardBg !== '#fff') { card.style.background = '#fff'; this._cardBg = '#fff'; }
       } else {
-        stopGifs(); showPrimis(false);
+        stopGifs(); showVimeo(null);
         if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
-        if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
         if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
         if (overlay && overlay.style.opacity !== '1') overlay.style.opacity = '1';
         const bg = Component.FLAT[((active % Component.FLAT.length) + Component.FLAT.length) % Component.FLAT.length];
@@ -473,9 +501,8 @@ class Component extends DCLogic {
       const tf = 'rotate(' + tilt + 'deg)';
       if (card.style.transform !== tf) card.style.transform = tf;
     } else {
-      stopGifs(); showPrimis(false);
+      stopGifs(); showVimeo(null);
       if (gifEl && gifEl.style.opacity !== '0') gifEl.style.opacity = '0';
-      if (vidEl && vidEl.style.opacity !== '0') vidEl.style.opacity = '0';
       if (fileEl && fileEl.style.opacity !== '0') fileEl.style.opacity = '0';
       if (overlay && overlay.style.opacity !== '1') overlay.style.opacity = '1';
       if (card.style.opacity !== '') card.style.opacity = '';
@@ -501,6 +528,7 @@ class Component extends DCLogic {
 
   componentWillUnmount() {
     (this._timers || []).forEach((t) => { clearTimeout(t); clearInterval(t); });
+    if (this._onWheel) window.removeEventListener('wheel', this._onWheel);
     if (this._rafId) cancelAnimationFrame(this._rafId);
     if (this._aboutRaf) cancelAnimationFrame(this._aboutRaf);
   }
@@ -599,20 +627,59 @@ class Component extends DCLogic {
       },
       toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
-      barTop: { display: 'block', width: '24px', height: '2px', background: '#F5F0E4', borderRadius: '2px', transition: 'transform .35s ease', transform: this.state.menuOpen ? 'translateY(3.5px) rotate(45deg)' : 'none' },
-      barMid: { display: 'block', width: '24px', height: '2px', background: '#F5F0E4', borderRadius: '2px', transition: 'transform .35s ease', transform: this.state.menuOpen ? 'translateY(-3.5px) rotate(-45deg)' : 'none' },
-      menuStyle: {
-        position: 'fixed', inset: 0, zIndex: 800, background: '#F5F0E4',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        padding: '0 clamp(24px,8vw,120px)',
+      menuOpenStr: this.state.menuOpen ? '1' : '0',
+      morphWrapStyle: {
+        position: 'fixed', top: '14px', right: '16px', zIndex: 970,
+        background: '#141414',
+        borderRadius: this.state.menuOpen ? '26px' : '12px',
+        width: this.state.menuOpen ? 'min(540px, calc(100vw - 32px))' : '60px',
+        height: this.state.menuOpen ? 'clamp(360px,60vh,470px)' : '42px',
+        overflow: 'hidden',
+        boxShadow: this.state.menuOpen ? '0 30px 80px -28px rgba(0,0,0,.55)' : '0 6px 18px -8px rgba(0,0,0,.35)',
+        transition: 'width .55s cubic-bezier(.22,1,.36,1), height .55s cubic-bezier(.22,1,.36,1), border-radius .5s ease, box-shadow .5s ease',
+      },
+      menuContentStyle: {
+        position: 'absolute', inset: 0, boxSizing: 'border-box',
+        padding: 'clamp(28px,4.2vw,48px)', paddingTop: 'clamp(64px,10vw,86px)',
+        display: 'flex', flexDirection: 'column', color: '#F5F0E4',
         opacity: this.state.menuOpen ? 1 : 0,
         pointerEvents: this.state.menuOpen ? 'auto' : 'none',
-        transform: this.state.menuOpen ? 'none' : 'translateY(-12px)',
-        transition: 'opacity .45s ease, transform .5s cubic-bezier(.22,1,.36,1)',
+        transition: 'opacity .4s ease',
+      },
+      backdropStyle: {
+        position: 'fixed', inset: 0, zIndex: 960,
+        background: this.state.menuOpen ? 'rgba(18,20,18,0.28)' : 'rgba(18,20,18,0)',
+        opacity: this.state.menuOpen ? 1 : 0,
+        pointerEvents: this.state.menuOpen ? 'auto' : 'none',
+        transition: 'opacity .4s ease, background .4s ease',
+      },
+      barTop: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', borderRadius: '2px', transition: 'transform .35s ease', transform: this.state.menuOpen ? 'translateY(4.5px) rotate(45deg)' : 'none' },
+      barMid: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', borderRadius: '2px', transition: 'transform .35s ease', transform: this.state.menuOpen ? 'translateY(-4.5px) rotate(-45deg)' : 'none' },
+      navGrowStyle: { display: 'inline-flex', transformOrigin: 'center', transform: this.state.introDone ? 'scale(1)' : 'scale(0)', opacity: this.state.introDone ? 1 : 0, transition: 'transform .7s cubic-bezier(.34,1.4,.64,1), opacity .45s ease' },
+      stopProp: (e) => { e.stopPropagation(); },
+      menuStyle: {
+        position: 'fixed', inset: 0, zIndex: 950,
+        background: this.state.menuOpen ? 'rgba(18,20,18,0.30)' : 'rgba(18,20,18,0)',
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end',
+        padding: '12px',
+        opacity: this.state.menuOpen ? 1 : 0,
+        pointerEvents: this.state.menuOpen ? 'auto' : 'none',
+        transition: 'opacity .4s ease, background .4s ease',
+      },
+      menuPanelStyle: {
+        position: 'relative', width: 'min(560px, 100%)',
+        background: '#0e100e', borderRadius: '26px',
+        padding: 'clamp(30px,4.5vw,54px)', color: '#F5F0E4',
+        boxShadow: '0 30px 80px -28px rgba(0,0,0,.6)',
+        transformOrigin: 'top right',
+        transform: this.state.menuOpen ? 'scale(1)' : 'scale(0.13)',
+        opacity: this.state.menuOpen ? 1 : 0,
+        transition: 'transform .55s cubic-bezier(.22,1,.36,1), opacity .35s ease',
       },
       introStyle: {
         position: 'fixed', inset: 0, zIndex: 1000, background: '#F5F0E4',
         display: this.state.introGone ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center',
+        overflow: 'hidden', padding: '0 5vw', textAlign: 'center',
         transform: this.state.introDone ? 'translateY(-100vh)' : 'none',
         transition: 'transform 1s cubic-bezier(.76,0,.24,1)',
         pointerEvents: this.state.introDone ? 'none' : 'auto',
