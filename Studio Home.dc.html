@@ -79,20 +79,20 @@
   <a href="#top" data-wordmark style="position:fixed;top:22px;left:clamp(18px,4vw,44px);z-index:901;font-family:'Thunder',sans-serif;font-size:34px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1;color:#ffffff;mix-blend-mode:difference;">PORTFOLIO</a>
   <div style="{{ backdropStyle }}" onClick="{{ closeMenu }}"></div>
   <div style="{{ morphWrapStyle }}" data-menu-open="{{ menuOpenStr }}">
-    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:absolute;top:5px;right:14px;width:32px;height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:none;border:none;cursor:pointer;z-index:3;padding:0;">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="{{ menuBtnStyle }}">
       <span style="{{ barTop }}"></span>
       <span style="{{ barMid }}"></span>
     </button>
     <div style="{{ menuContentStyle }}">
       <div style="display:flex;flex-direction:column;gap:2px;">
-        <a data-navlink href="#work" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+        <a data-navlink href="#work" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(30px,7vw,42px);line-height:1.04;letter-spacing:.01em;color:#F5F0E4;">
           <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>Work
         </a>
-        <a data-navlink href="#about" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+        <a data-navlink href="#about" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(30px,7vw,42px);line-height:1.04;letter-spacing:.01em;color:#F5F0E4;">
           <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>About
         </a>
       </div>
-      <a href="mailto:asylum.tal@gmail.com" data-menu-email onClick="{{ closeMenu }}" style="display:inline-block;margin-top:clamp(26px,4vw,42px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(16px,4vw,23px);letter-spacing:-.01em;color:#F5F0E4;">asylum.tal@gmail.com</a>
+      <a href="mailto:asylum.tal@gmail.com" data-menu-email onClick="{{ closeMenu }}" style="display:inline-block;margin-top:clamp(18px,3vw,26px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(15px,2.6vw,19px);letter-spacing:-.01em;color:#F5F0E4;">asylum.tal@gmail.com</a>
     </div>
   </div>
 
@@ -359,7 +359,7 @@ class Component extends DCLogic {
     // Smooth momentum scroll on desktop; mobile keeps native touch momentum
     if (!('ontouchstart' in window) && window.matchMedia && window.matchMedia('(min-width:900px)').matches) {
       let target = window.scrollY || 0, cur = target, running = false;
-      const ease = 0.055;
+      const ease = 0.038;
       const maxY = () => (document.documentElement.scrollHeight - window.innerHeight);
       const step = () => {
         cur += (target - cur) * ease;
@@ -372,11 +372,42 @@ class Component extends DCLogic {
         if (this.state && !this.state.introGone) return;
         e.preventDefault();
         if (!running) { cur = window.scrollY; target = cur; }
-        target = Math.max(0, Math.min(maxY(), target + e.deltaY * 0.8));
+        target = Math.max(0, Math.min(maxY(), target + e.deltaY * 0.5));
         if (!running) { running = true; requestAnimationFrame(step); }
       };
       window.addEventListener('wheel', onWheel, { passive: false });
       this._onWheel = onWheel;
+
+      let ty = 0, tvel = 0, tlast = 0;
+      const onTouchStart = (e) => {
+        if (this.state && !this.state.introGone) return;
+        const t = e.touches[0]; ty = t.clientY; tlast = performance.now(); tvel = 0;
+        if (!running) { cur = window.scrollY; target = cur; }
+      };
+      const onTouchMove = (e) => {
+        if (this.state && !this.state.introGone) return;
+        const y = e.touches[0].clientY; const dy = ty - y; ty = y;
+        const now = performance.now(); const dt = Math.max(8, now - tlast); tlast = now;
+        tvel = dy / dt;
+        e.preventDefault();
+        target = Math.max(0, Math.min(maxY(), target + dy * 0.5));
+        if (!running) { running = true; requestAnimationFrame(step); }
+      };
+      const onTouchEnd = () => {
+        let v = tvel * 15;
+        const fling = () => {
+          if (Math.abs(v) < 0.6) return;
+          target = Math.max(0, Math.min(maxY(), target + v));
+          v *= 0.94;
+          if (!running) { running = true; requestAnimationFrame(step); }
+          requestAnimationFrame(fling);
+        };
+        fling();
+      };
+      window.addEventListener('touchstart', onTouchStart, { passive: true });
+      window.addEventListener('touchmove', onTouchMove, { passive: false });
+      window.addEventListener('touchend', onTouchEnd, { passive: true });
+      this._onTouchStart = onTouchStart; this._onTouchMove = onTouchMove; this._onTouchEnd = onTouchEnd;
     }
   }
 
@@ -529,6 +560,9 @@ class Component extends DCLogic {
   componentWillUnmount() {
     (this._timers || []).forEach((t) => { clearTimeout(t); clearInterval(t); });
     if (this._onWheel) window.removeEventListener('wheel', this._onWheel);
+    if (this._onTouchStart) window.removeEventListener('touchstart', this._onTouchStart);
+    if (this._onTouchMove) window.removeEventListener('touchmove', this._onTouchMove);
+    if (this._onTouchEnd) window.removeEventListener('touchend', this._onTouchEnd);
     if (this._rafId) cancelAnimationFrame(this._rafId);
     if (this._aboutRaf) cancelAnimationFrame(this._aboutRaf);
   }
@@ -628,19 +662,26 @@ class Component extends DCLogic {
       toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
       menuOpenStr: this.state.menuOpen ? '1' : '0',
+      menuBtnStyle: {
+        position: 'absolute',
+        top: '5px', right: '14px',
+        width: '32px', height: '32px', display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center', gap: '6px',
+        background: 'none', border: 'none', cursor: 'pointer', zIndex: 3, padding: 0,
+      },
       morphWrapStyle: {
         position: 'fixed', top: '14px', right: '16px', zIndex: 970,
         background: '#141414',
-        borderRadius: this.state.menuOpen ? '26px' : '12px',
-        width: this.state.menuOpen ? 'min(540px, calc(100vw - 32px))' : '60px',
-        height: this.state.menuOpen ? 'clamp(360px,60vh,470px)' : '42px',
+        borderRadius: this.state.menuOpen ? '18px' : '12px',
+        width: this.state.menuOpen ? 'min(280px, calc(100vw - 32px))' : '60px',
+        height: this.state.menuOpen ? '216px' : '42px',
         overflow: 'hidden',
         boxShadow: this.state.menuOpen ? '0 30px 80px -28px rgba(0,0,0,.55)' : '0 6px 18px -8px rgba(0,0,0,.35)',
         transition: 'width .55s cubic-bezier(.22,1,.36,1), height .55s cubic-bezier(.22,1,.36,1), border-radius .5s ease, box-shadow .5s ease',
       },
       menuContentStyle: {
         position: 'absolute', inset: 0, boxSizing: 'border-box',
-        padding: 'clamp(28px,4.2vw,48px)', paddingTop: 'clamp(64px,10vw,86px)',
+        padding: '22px 22px 22px', paddingTop: '58px',
         display: 'flex', flexDirection: 'column', color: '#F5F0E4',
         opacity: this.state.menuOpen ? 1 : 0,
         pointerEvents: this.state.menuOpen ? 'auto' : 'none',

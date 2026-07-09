@@ -397,10 +397,15 @@ class Component extends DCLogic {
     if (!window.__smoothScroll && !('ontouchstart' in window) && window.matchMedia && window.matchMedia('(min-width:900px)').matches) {
       window.__smoothScroll = true;
       let __t = window.scrollY || 0, __c = __t, __run = false;
-      const __ease = 0.055;
+      const __ease = 0.038;
       const __max = () => (document.documentElement.scrollHeight - window.innerHeight);
       const __step = () => { __c += (__t - __c) * __ease; if (Math.abs(__t - __c) < 0.4) { __c = __t; window.scrollTo(0, __c); __run = false; return; } window.scrollTo(0, __c); requestAnimationFrame(__step); };
-      window.addEventListener('wheel', (e) => { if (e.ctrlKey) return; e.preventDefault(); if (!__run) { __c = window.scrollY; __t = __c; } __t = Math.max(0, Math.min(__max(), __t + e.deltaY * 0.8)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+      const __inner = (node, dy) => { let el = node; while (el && el !== document.body && el !== document.documentElement) { if (el.nodeType === 1) { const cs = getComputedStyle(el); const oy = cs.overflowY; if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 1) { const atTop = el.scrollTop <= 0; const atBot = el.scrollTop + el.clientHeight >= el.scrollHeight - 1; if (!((dy < 0 && atTop) || (dy > 0 && atBot))) return true; } } el = el.parentElement; } return false; };
+      window.addEventListener('wheel', (e) => { if (e.ctrlKey) return; if (__inner(e.target, e.deltaY)) return; e.preventDefault(); if (!__run) { __c = window.scrollY; __t = __c; } __t = Math.max(0, Math.min(__max(), __t + e.deltaY * 0.5)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+      let __ty = 0, __tvel = 0, __tlast = 0;
+      window.addEventListener('touchstart', (e) => { const t = e.touches[0]; __ty = t.clientY; __tlast = performance.now(); __tvel = 0; if (!__run) { __c = window.scrollY; __t = __c; } }, { passive: true });
+      window.addEventListener('touchmove', (e) => { if (__inner(e.target, (__ty - e.touches[0].clientY))) { __ty = e.touches[0].clientY; return; } const y = e.touches[0].clientY; const dy = __ty - y; __ty = y; const now = performance.now(); const dt = Math.max(8, now - __tlast); __tlast = now; __tvel = dy / dt; e.preventDefault(); __t = Math.max(0, Math.min(__max(), __t + dy * 0.5)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+      window.addEventListener('touchend', () => { let v = __tvel * 15; const fling = () => { if (Math.abs(v) < 0.6) return; __t = Math.max(0, Math.min(__max(), __t + v)); v *= 0.94; if (!__run) { __run = true; requestAnimationFrame(__step); } requestAnimationFrame(fling); }; fling(); }, { passive: true });
     }
     const heroVid = document.querySelector('video[data-hero-video]');
     if (heroVid) { heroVid.play && heroVid.play().catch(() => {}); }

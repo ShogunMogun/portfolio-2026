@@ -88,20 +88,20 @@
   <a href="Studio Home.dc.html" data-wordmark style="position:fixed;top:22px;left:clamp(18px,4vw,44px);z-index:901;font-family:'Thunder',sans-serif;font-size:34px;font-weight:800;letter-spacing:.01em;text-transform:uppercase;line-height:1;color:#ffffff;mix-blend-mode:difference;">PORTFOLIO</a>
   <div style="{{ backdropStyle }}" onClick="{{ closeMenu }}"></div>
   <div style="{{ morphWrapStyle }}" data-menu-open="{{ menuOpenStr }}">
-    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="position:absolute;top:5px;right:14px;width:32px;height:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:none;border:none;cursor:pointer;z-index:3;padding:0;">
+    <button onClick="{{ toggleMenu }}" aria-label="Menu" style="{{ menuBtnStyle }}">
       <span style="{{ barTop }}"></span>
       <span style="{{ barMid }}"></span>
     </button>
     <div style="{{ menuContentStyle }}">
       <div style="display:flex;flex-direction:column;gap:2px;">
-        <a data-navlink href="Studio Home.dc.html#work" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+        <a data-navlink href="Studio Home.dc.html#work" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(30px,7vw,42px);line-height:1.04;letter-spacing:.01em;color:#F5F0E4;">
           <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>Work
         </a>
-        <a data-navlink href="Studio Home.dc.html#about" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(50px,13vw,86px);line-height:1.02;letter-spacing:.01em;color:#F5F0E4;">
+        <a data-navlink href="Studio Home.dc.html#about" onClick="{{ closeMenu }}" style="display:inline-flex;align-items:center;font-family:'Thunder',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(30px,7vw,42px);line-height:1.04;letter-spacing:.01em;color:#F5F0E4;">
           <span data-navarrow><svg viewBox="0 0 78 18" style="width:1.18em;height:auto;overflow:visible;flex-shrink:0;display:block;"><line x1="0" y1="9" x2="73" y2="9" stroke="currentColor" stroke-width="1.3"></line><path d="M56,2.5 C66,4 72,6 75,9 C72,12 66,14 56,15.5" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span>About
         </a>
       </div>
-      <a href="mailto:asylum.tal@gmail.com" data-menu-email onClick="{{ closeMenu }}" style="display:inline-block;margin-top:clamp(26px,4vw,42px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(16px,4vw,23px);letter-spacing:-.01em;color:#F5F0E4;">asylum.tal@gmail.com</a>
+      <a href="mailto:asylum.tal@gmail.com" data-menu-email onClick="{{ closeMenu }}" style="display:inline-block;margin-top:clamp(18px,3vw,26px);font-family:'Nyght Serif',serif;font-weight:400;font-size:clamp(15px,2.6vw,19px);letter-spacing:-.01em;color:#F5F0E4;">asylum.tal@gmail.com</a>
     </div>
   </div>
 
@@ -416,10 +416,15 @@ class Component extends DCLogic {
     if (!window.__smoothScroll && !('ontouchstart' in window) && window.matchMedia && window.matchMedia('(min-width:900px)').matches) {
       window.__smoothScroll = true;
       let __t = window.scrollY || 0, __c = __t, __run = false;
-      const __ease = 0.055;
+      const __ease = 0.038;
       const __max = () => (document.documentElement.scrollHeight - window.innerHeight);
       const __step = () => { __c += (__t - __c) * __ease; if (Math.abs(__t - __c) < 0.4) { __c = __t; window.scrollTo(0, __c); __run = false; return; } window.scrollTo(0, __c); requestAnimationFrame(__step); };
-      window.addEventListener('wheel', (e) => { if (e.ctrlKey) return; e.preventDefault(); if (!__run) { __c = window.scrollY; __t = __c; } __t = Math.max(0, Math.min(__max(), __t + e.deltaY * 0.8)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+      const __inner = (node, dy) => { let el = node; while (el && el !== document.body && el !== document.documentElement) { if (el.nodeType === 1) { const cs = getComputedStyle(el); const oy = cs.overflowY; if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 1) { const atTop = el.scrollTop <= 0; const atBot = el.scrollTop + el.clientHeight >= el.scrollHeight - 1; if (!((dy < 0 && atTop) || (dy > 0 && atBot))) return true; } } el = el.parentElement; } return false; };
+      window.addEventListener('wheel', (e) => { if (e.ctrlKey) return; if (__inner(e.target, e.deltaY)) return; e.preventDefault(); if (!__run) { __c = window.scrollY; __t = __c; } __t = Math.max(0, Math.min(__max(), __t + e.deltaY * 0.5)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+      let __ty = 0, __tvel = 0, __tlast = 0;
+      window.addEventListener('touchstart', (e) => { const t = e.touches[0]; __ty = t.clientY; __tlast = performance.now(); __tvel = 0; if (!__run) { __c = window.scrollY; __t = __c; } }, { passive: true });
+      window.addEventListener('touchmove', (e) => { if (__inner(e.target, (__ty - e.touches[0].clientY))) { __ty = e.touches[0].clientY; return; } const y = e.touches[0].clientY; const dy = __ty - y; __ty = y; const now = performance.now(); const dt = Math.max(8, now - __tlast); __tlast = now; __tvel = dy / dt; e.preventDefault(); __t = Math.max(0, Math.min(__max(), __t + dy * 0.5)); if (!__run) { __run = true; requestAnimationFrame(__step); } }, { passive: false });
+      window.addEventListener('touchend', () => { let v = __tvel * 15; const fling = () => { if (Math.abs(v) < 0.6) return; __t = Math.max(0, Math.min(__max(), __t + v)); v *= 0.94; if (!__run) { __run = true; requestAnimationFrame(__step); } requestAnimationFrame(fling); }; fling(); }, { passive: true });
     }
     const heroVid = document.querySelector('video[data-hero-video]');
     if (heroVid) { heroVid.play && heroVid.play().catch(() => {}); }
@@ -658,8 +663,9 @@ class Component extends DCLogic {
       toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
       menuOpenStr: open ? '1' : '0',
-      morphWrapStyle: { position:'fixed', top:'14px', right:'16px', zIndex:970, background:'#141414', borderRadius: open?'26px':'12px', width: open?'min(540px, calc(100vw - 32px))':'60px', height: open?'clamp(360px,60vh,470px)':'42px', overflow:'hidden', boxShadow: open?'0 30px 80px -28px rgba(0,0,0,.55)':'0 6px 18px -8px rgba(0,0,0,.35)', transition:'width .55s cubic-bezier(.22,1,.36,1), height .55s cubic-bezier(.22,1,.36,1), border-radius .5s ease, box-shadow .5s ease' },
-      menuContentStyle: { position:'absolute', inset:0, boxSizing:'border-box', padding:'clamp(28px,4.2vw,48px)', paddingTop:'clamp(64px,10vw,86px)', display:'flex', flexDirection:'column', color:'#F5F0E4', opacity: open?1:0, pointerEvents: open?'auto':'none', transition:'opacity .4s ease' },
+      menuBtnStyle: { position:'absolute', top:'5px', right:'14px', width:'32px', height:'32px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'6px', background:'none', border:'none', cursor:'pointer', zIndex:3, padding:0 },
+      morphWrapStyle: { position:'fixed', top:'14px', right:'16px', zIndex:970, background:'#141414', borderRadius: open?'18px':'12px', width: open?'min(280px, calc(100vw - 32px))':'60px', height: open?'216px':'42px', overflow:'hidden', boxShadow: open?'0 30px 80px -28px rgba(0,0,0,.55)':'0 6px 18px -8px rgba(0,0,0,.35)', transition:'width .55s cubic-bezier(.22,1,.36,1), height .55s cubic-bezier(.22,1,.36,1), border-radius .5s ease, box-shadow .5s ease' },
+      menuContentStyle: { position:'absolute', inset:0, boxSizing:'border-box', padding:'22px 22px 22px', paddingTop:'58px', display:'flex', flexDirection:'column', color:'#F5F0E4', opacity: open?1:0, pointerEvents: open?'auto':'none', transition:'opacity .4s ease' },
       backdropStyle: { position:'fixed', inset:0, zIndex:960, background: open?'rgba(18,20,18,0.28)':'rgba(18,20,18,0)', opacity: open?1:0, pointerEvents: open?'auto':'none', transition:'opacity .4s ease, background .4s ease' },
       barTop: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(4.5px) rotate(45deg)' : 'none' },
       barMid: { display: 'block', width: '28px', height: '3px', background: '#F5F0E4', transition: 'transform .3s ease', transform: open ? 'translateY(-4.5px) rotate(-45deg)' : 'none' },
